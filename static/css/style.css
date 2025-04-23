@@ -1,0 +1,82 @@
+/* Main Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Header & Navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+/* Main Content */
+main {
+    min-height: 70vh;
+}
+
+/* Cards */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Team Members */
+.team-member {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+/* Publications */
+.publication {
+    padding: 1rem;
+    border-left: 4px solid #007bff;
+    background-color: #f8f9fa;
+    margin-bottom: 1.5rem;
+}
+
+.publication .authors {
+    font-style: italic;
+    color: #6c757d;
+}
+
+.publication .venue {
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+}
+
+/* Custom Utilities */
+.bg-light-gray {
+    background-color: #f8f9fa;
+}
+
+.border-primary {
+    border-left: 4px solid #007bff !important;
+} 

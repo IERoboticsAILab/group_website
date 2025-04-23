@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Research Group - Publications{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Publications</h1>
+
+<div class="mb-4">
+    <p>
+        Our research group has published numerous papers in leading journals and conferences.
+        Below is a list of our recent publications.
+    </p>
+</div>
+
+<!-- Filter by year -->
+<div class="mb-4">
+    <label for="publication-year-filter" class="form-label">Filter by Year:</label>
+    <select id="publication-year-filter" class="form-select w-auto">
+        <option value="all" selected>All Years</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+    </select>
+</div>
+
+<!-- Publications List -->
+<div class="publications-list">
+    {% for pub in publications %}
+    <div class="publication" data-year="{{ pub.year }}">
+        <h4>{{ pub.title }}</h4>
+        <p class="authors">{{ pub.authors }}</p>
+        <p class="venue">{{ pub.venue }}</p>
+        {% if pub.doi %}
+        <p class="doi">DOI: <a href="https://doi.org/{{ pub.doi }}" target="_blank">{{ pub.doi }}</a></p>
+        {% endif %}
+        {% if pub.link %}
+        <p><a href="{{ pub.link }}" class="btn btn-sm btn-outline-primary" target="_blank">View Publication</a></p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No publications available at the moment.</p>
+    {% endfor %}
+</div>
+
+<!-- Citation Information -->
+<div class="mt-5">
+    <h3>Citing Our Work</h3>
+    <p>
+        If you use our research in your work, please cite our papers. For general references to our research group, you can use:
+    </p>
+    <div class="card">
+        <div class="card-body bg-light">
+            <pre>@article{ResearchGroup2023,
+  author = {[Author List]},
+  title = {[Title of Work]},
+  journal = {[Journal Name]},
+  year = {[Year]},
+  volume = {[Volume]},
+  pages = {[Pages]},
+  doi = {[DOI]}
+}</pre>
+        </div>
+    </div>
+</div>
+{% endblock %} 

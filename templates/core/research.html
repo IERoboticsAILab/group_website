@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Research Group - Research{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Our Research</h1>
+
+<div class="mb-5">
+    <h3>Research Overview</h3>
+    <p>
+        Our research focuses on [provide a general overview of your research group's focus area]. 
+        We are particularly interested in developing new methodologies and applications in the following areas:
+    </p>
+</div>
+
+<h3 class="mb-3">Current Research Projects</h3>
+<div class="row">
+    {% for project in research_projects %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if project.image %}
+            <img src="{% static project.image %}" class="card-img-top" alt="{{ project.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.description }}</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p>No research projects available at the moment.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="mt-5">
+    <h3>Research Facilities</h3>
+    <p>
+        Our group is equipped with state-of-the-art facilities that enable cutting-edge research:
+    </p>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Laboratory 1</h5>
+                    <p class="card-text">Description of laboratory 1 and its equipment.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Laboratory 2</h5>
+                    <p class="card-text">Description of laboratory 2 and its equipment.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <h3>Collaborations</h3>
+    <p>
+        We collaborate with several other research groups and institutions:
+    </p>
+    <ul>
+        <li>
+            <strong>Institution 1</strong> - Brief description of collaboration
+        </li>
+        <li>
+            <strong>Institution 2</strong> - Brief description of collaboration
+        </li>
+        <li>
+            <strong>Institution 3</strong> - Brief description of collaboration
+        </li>
+    </ul>
+</div>
+{% endblock %} 

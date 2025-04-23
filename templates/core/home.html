@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Research Group - Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Welcome to Our Research Group</h1>
+    <p class="lead">We are a dedicated team of researchers working on cutting-edge problems in [your research area].</p>
+    <hr class="my-4">
+    <p>Our mission is to advance scientific knowledge and develop innovative solutions through collaborative research.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'about' %}" role="button">Learn more</a>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Latest Research</h5>
+                <p class="card-text">Our team has recently published groundbreaking findings in [specific research area].</p>
+                <a href="{% url 'research' %}" class="btn btn-outline-primary">View Research</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Meet the Team</h5>
+                <p class="card-text">Our diverse group of researchers brings together expertise from multiple disciplines.</p>
+                <a href="{% url 'members' %}" class="btn btn-outline-primary">View Members</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Recent Publications</h5>
+                <p class="card-text">Check out our latest peer-reviewed publications and conference papers.</p>
+                <a href="{% url 'publications' %}" class="btn btn-outline-primary">View Publications</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
