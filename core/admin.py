@@ -22,6 +22,20 @@ class ResearchProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'research_area', 'featured', 'order')
     list_filter = ('research_area', 'featured')
     list_editable = ('featured', 'order')
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title', 'description', 'content')
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'description', 'image', 'research_area')
+        }),
+        ('Display Options', {
+            'fields': ('featured', 'order')
+        }),
+        ('Detailed Content', {
+            'fields': ('content',),
+            'classes': ('collapse',)
+        }),
+    )
 
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):

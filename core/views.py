@@ -73,7 +73,7 @@ def research(request):
     
     return render(request, 'core/research.html', context)
 
-def members(request):
+def people(request):
     # Get active team members by role
     pis = TeamMember.objects.filter(active=True, role='PI')
     postdocs = TeamMember.objects.filter(active=True, role='POSTDOC')
@@ -95,7 +95,7 @@ def members(request):
         'alumni': alumni,
     }
     
-    return render(request, 'core/members.html', context)
+    return render(request, 'core/people.html', context)
 
 def publications(request):
     # Get all publications ordered by year
@@ -110,6 +110,39 @@ def publications(request):
     }
     
     return render(request, 'core/publications.html', context)
+
+def projects(request):
+    # Get all projects
+    all_projects = ResearchProject.objects.all()
+    
+    # Get research areas for filtering
+    research_areas = ResearchArea.objects.all()
+    
+    context = {
+        'projects': all_projects,
+        'research_areas': research_areas,
+    }
+    
+    return render(request, 'core/projects.html', context)
+
+def project_detail(request, slug):
+    # Get the project
+    project = get_object_or_404(ResearchProject, slug=slug)
+    
+    # Get related projects from the same research area
+    if project.research_area:
+        related_projects = ResearchProject.objects.filter(
+            research_area=project.research_area
+        ).exclude(id=project.id)[:3]
+    else:
+        related_projects = ResearchProject.objects.exclude(id=project.id)[:3]
+    
+    context = {
+        'project': project,
+        'related_projects': related_projects,
+    }
+    
+    return render(request, 'core/project_detail.html', context)
 
 def contact(request):
     # Get lab info for contact details

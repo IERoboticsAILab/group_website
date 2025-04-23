@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 
 class HomeContent(models.Model):
     headline = models.CharField(max_length=200)
@@ -33,6 +34,8 @@ class ResearchProject(models.Model):
     featured = models.BooleanField(default=False)
     research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
     order = models.PositiveIntegerField(default=0)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
+    content = models.TextField(blank=True, help_text="Detailed content for project detail page")
     
     class Meta:
         ordering = ['order']
@@ -41,6 +44,14 @@ class ResearchProject(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('project_detail', kwargs={'slug': self.slug})
 
 class TeamMember(models.Model):
     ROLE_CHOICES = [

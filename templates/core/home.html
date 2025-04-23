@@ -16,7 +16,6 @@
         <hr class="my-4">
         <p>Our mission is to advance scientific knowledge and develop innovative solutions through collaborative research.</p>
     {% endif %}
-    <a class="btn btn-primary btn-lg" href="{% url 'about' %}" role="button">Learn more</a>
 </div>
 
 <div class="row mt-5">
@@ -28,13 +27,13 @@
                     <p class="card-text">Check out our latest research projects.</p>
                     <ul class="list-unstyled">
                         {% for project in featured_projects %}
-                            <li class="mb-2"><a href="{% url 'research' %}">{{ project.title }}</a></li>
+                            <li class="mb-2"><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></li>
                         {% endfor %}
                     </ul>
                 {% else %}
                     <p class="card-text">Our team is working on cutting-edge research projects.</p>
                 {% endif %}
-                <a href="{% url 'research' %}" class="btn btn-outline-primary">View Research</a>
+                <a href="{% url 'projects' %}" class="btn btn-outline-primary">View Projects</a>
             </div>
         </div>
     </div>
@@ -52,7 +51,6 @@
                 {% else %}
                     <p class="card-text">Our diverse group of researchers brings together expertise from multiple disciplines.</p>
                 {% endif %}
-                <a href="{% url 'members' %}" class="btn btn-outline-primary">View Members</a>
             </div>
         </div>
     </div>
