@@ -13,6 +13,21 @@
                 <h3 class="mb-0">General Information</h3>
             </div>
             <div class="card-body">
+                {% if lab_info %}
+                <h5>Address</h5>
+                <p>
+                    Department of {{ lab_info.department }}<br>
+                    {{ lab_info.institution }}<br>
+                    Building {{ lab_info.building }}, Room {{ lab_info.room }}<br>
+                    {{ lab_info.address|linebreaks }}
+                </p>
+                
+                <h5 class="mt-4">Contact Details</h5>
+                <p>
+                    <strong>Email:</strong> <a href="mailto:{{ lab_info.email }}">{{ lab_info.email }}</a><br>
+                    <strong>Phone:</strong> {{ lab_info.phone }}<br>
+                </p>
+                {% else %}
                 <h5>Address</h5>
                 <p>
                     Department of [Department Name]<br>
@@ -26,8 +41,8 @@
                 <p>
                     <strong>Email:</strong> <a href="mailto:contact@researchgroup.com">contact@researchgroup.com</a><br>
                     <strong>Phone:</strong> (123) 456-7890<br>
-                    <strong>Fax:</strong> (123) 456-7891
                 </p>
+                {% endif %}
                 
                 <h5 class="mt-4">Social Media</h5>
                 <p>
@@ -71,6 +86,15 @@
 
 <div class="mt-5">
     <h3>Directions</h3>
+    {% if lab_info %}
+    <p>
+        Our lab is located in {{ lab_info.building }}, Room {{ lab_info.room }}.
+    </p>
+    
+    <div class="ratio ratio-16x9 mt-3">
+        <iframe src="{{ lab_info.map_embed_url }}" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    {% else %}
     <p>
         Our lab is located in [Building Name], on the [floor] floor, room [room number].
     </p>
@@ -79,5 +103,6 @@
         <!-- Replace with your actual Google Maps embed code -->
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.7158333400945!2d-122.4194!3d37.7749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858075e71bd513%3A0x6ec953852fcb8970!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1625234422526!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
+    {% endif %}
 </div>
 {% endblock %} 

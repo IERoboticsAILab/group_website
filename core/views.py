@@ -1,90 +1,125 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import (
+    HomeContent, ResearchArea, ResearchProject, TeamMember,
+    Publication, AboutContent, LabInfo, FundingSource, Collaborator
+)
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'core/home.html')
+    # Get home content or use a default
+    try:
+        home_content = HomeContent.objects.first()
+    except HomeContent.DoesNotExist:
+        home_content = None
+    
+    # Get featured research projects
+    featured_projects = ResearchProject.objects.filter(featured=True)[:3]
+    
+    # Get active team members
+    team_members = TeamMember.objects.filter(active=True)[:3]
+    
+    # Get highlighted publications
+    highlighted_pubs = Publication.objects.filter(highlighted=True)[:3]
+    
+    context = {
+        'home_content': home_content,
+        'featured_projects': featured_projects,
+        'featured_members': team_members,
+        'highlighted_publications': highlighted_pubs,
+    }
+    
+    return render(request, 'core/home.html', context)
 
 def about(request):
-    return render(request, 'core/about.html')
+    # Get about content or use a default
+    try:
+        about_content = AboutContent.objects.first()
+    except AboutContent.DoesNotExist:
+        about_content = None
+    
+    # Get lab info
+    try:
+        lab_info = LabInfo.objects.first()
+    except LabInfo.DoesNotExist:
+        lab_info = None
+    
+    # Get funding sources
+    funding_sources = FundingSource.objects.all()
+    
+    context = {
+        'about_content': about_content,
+        'lab_info': lab_info,
+        'funding_sources': funding_sources,
+    }
+    
+    return render(request, 'core/about.html', context)
 
 def research(request):
-    # Example research projects
-    research_projects = [
-        {
-            'title': 'Project 1',
-            'description': 'Description of research project 1',
-            'image': 'images/project1.jpg',
-        },
-        {
-            'title': 'Project 2',
-            'description': 'Description of research project 2',
-            'image': 'images/project2.jpg',
-        },
-        {
-            'title': 'Project 3',
-            'description': 'Description of research project 3',
-            'image': 'images/project3.jpg',
-        },
-    ]
-    return render(request, 'core/research.html', {'research_projects': research_projects})
+    # Get all research areas with their projects
+    research_areas = ResearchArea.objects.all()
+    
+    # Get all research projects
+    research_projects = ResearchProject.objects.all()
+    
+    # Get collaborators
+    collaborators = Collaborator.objects.all()
+    
+    context = {
+        'research_areas': research_areas,
+        'research_projects': research_projects,
+        'collaborators': collaborators,
+    }
+    
+    return render(request, 'core/research.html', context)
 
 def members(request):
-    # Example team members
-    team_members = [
-        {
-            'name': 'Prof. John Doe',
-            'title': 'Principal Investigator',
-            'bio': 'Short biography of Prof. John Doe',
-            'image': 'images/member1.jpg',
-            'email': 'john.doe@example.com',
-        },
-        {
-            'name': 'Dr. Jane Smith',
-            'title': 'Postdoctoral Researcher',
-            'bio': 'Short biography of Dr. Jane Smith',
-            'image': 'images/member2.jpg',
-            'email': 'jane.smith@example.com',
-        },
-        {
-            'name': 'Alex Johnson',
-            'title': 'PhD Student',
-            'bio': 'Short biography of Alex Johnson',
-            'image': 'images/member3.jpg',
-            'email': 'alex.johnson@example.com',
-        },
-    ]
-    return render(request, 'core/members.html', {'team_members': team_members})
+    # Get active team members by role
+    pis = TeamMember.objects.filter(active=True, role='PI')
+    postdocs = TeamMember.objects.filter(active=True, role='POSTDOC')
+    phd_students = TeamMember.objects.filter(active=True, role='PHD')
+    masters = TeamMember.objects.filter(active=True, role='MS')
+    undergrads = TeamMember.objects.filter(active=True, role='UNDERGRAD')
+    staff = TeamMember.objects.filter(active=True, role='STAFF')
+    
+    # Alumni
+    alumni = TeamMember.objects.filter(active=False) | TeamMember.objects.filter(role='ALUMNI')
+    
+    context = {
+        'pis': pis,
+        'postdocs': postdocs,
+        'phd_students': phd_students,
+        'masters': masters,
+        'undergrads': undergrads,
+        'staff': staff,
+        'alumni': alumni,
+    }
+    
+    return render(request, 'core/members.html', context)
 
 def publications(request):
-    # Example publications
-    publications_list = [
-        {
-            'title': 'Example Publication Title 1',
-            'authors': 'Doe, J., Smith, J., Johnson, A.',
-            'venue': 'Journal of Example Research, 2023',
-            'doi': '10.1234/example.123456',
-            'link': 'https://example.com/publication1',
-            'year': '2023',
-        },
-        {
-            'title': 'Example Publication Title 2',
-            'authors': 'Smith, J., Doe, J., Johnson, A.',
-            'venue': 'Conference on Example Topics, 2022',
-            'doi': '10.1234/example.654321',
-            'link': 'https://example.com/publication2',
-            'year': '2022',
-        },
-        {
-            'title': 'Example Publication Title 3',
-            'authors': 'Johnson, A., Doe, J., Smith, J.',
-            'venue': 'International Journal of Examples, 2021',
-            'doi': '10.1234/example.789012',
-            'link': 'https://example.com/publication3',
-            'year': '2021',
-        },
-    ]
-    return render(request, 'core/publications.html', {'publications': publications_list})
+    # Get all publications ordered by year
+    all_publications = Publication.objects.all()
+    
+    # Get unique years for filter
+    publication_years = Publication.objects.values_list('year', flat=True).distinct().order_by('-year')
+    
+    context = {
+        'publications': all_publications,
+        'publication_years': publication_years,
+    }
+    
+    return render(request, 'core/publications.html', context)
 
 def contact(request):
-    return render(request, 'core/contact.html')
+    # Get lab info for contact details
+    try:
+        lab_info = LabInfo.objects.first()
+    except LabInfo.DoesNotExist:
+        lab_info = None
+    
+    context = {
+        'lab_info': lab_info,
+    }
+    
+    return render(request, 'core/contact.html', context)

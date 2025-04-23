@@ -18,10 +18,9 @@
     <label for="publication-year-filter" class="form-label">Filter by Year:</label>
     <select id="publication-year-filter" class="form-select w-auto">
         <option value="all" selected>All Years</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-        <option value="2020">2020</option>
+        {% for year in publication_years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
     </select>
 </div>
 
@@ -34,6 +33,18 @@
         <p class="venue">{{ pub.venue }}</p>
         {% if pub.doi %}
         <p class="doi">DOI: <a href="https://doi.org/{{ pub.doi }}" target="_blank">{{ pub.doi }}</a></p>
+        {% endif %}
+        {% if pub.abstract %}
+        <div class="abstract-toggle mb-2">
+            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#abstract-{{ forloop.counter }}" role="button">
+                Show Abstract
+            </a>
+            <div class="collapse mt-2" id="abstract-{{ forloop.counter }}">
+                <div class="card card-body">
+                    {{ pub.abstract }}
+                </div>
+            </div>
+        </div>
         {% endif %}
         {% if pub.link %}
         <p><a href="{{ pub.link }}" class="btn btn-sm btn-outline-primary" target="_blank">View Publication</a></p>
@@ -64,4 +75,22 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle abstract show/hide text
+        const abstractToggles = document.querySelectorAll('.abstract-toggle a');
+        abstractToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                if (this.textContent.trim() === 'Show Abstract') {
+                    this.textContent = 'Hide Abstract';
+                } else {
+                    this.textContent = 'Show Abstract';
+                }
+            });
+        });
+    });
+</script>
 {% endblock %} 

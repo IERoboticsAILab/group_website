@@ -1,3 +1,144 @@
 from django.db import models
+from django.utils.text import slugify
 
-# Create your models here.
+class HomeContent(models.Model):
+    headline = models.CharField(max_length=200)
+    subheadline = models.TextField()
+    mission_statement = models.TextField()
+    
+    class Meta:
+        verbose_name = "Home Page Content"
+        verbose_name_plural = "Home Page Content"
+    
+    def __str__(self):
+        return "Home Page Content"
+
+class ResearchArea(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Research Area"
+        verbose_name_plural = "Research Areas"
+    
+    def __str__(self):
+        return self.name
+
+class ResearchProject(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='projects/', blank=True, null=True)
+    featured = models.BooleanField(default=False)
+    research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Research Project"
+        verbose_name_plural = "Research Projects"
+    
+    def __str__(self):
+        return self.title
+
+class TeamMember(models.Model):
+    ROLE_CHOICES = [
+        ('PI', 'Principal Investigator'),
+        ('POSTDOC', 'Postdoctoral Researcher'),
+        ('PHD', 'PhD Student'),
+        ('MS', 'Master Student'),
+        ('UNDERGRAD', 'Undergraduate Student'),
+        ('STAFF', 'Staff'),
+        ('ALUMNI', 'Alumni'),
+    ]
+    
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    bio = models.TextField()
+    email = models.EmailField(blank=True)
+    personal_website = models.URLField(blank=True)
+    image = models.ImageField(upload_to='members/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+    active = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name = "Team Member"
+        verbose_name_plural = "Team Members"
+    
+    def __str__(self):
+        return self.name
+
+class Publication(models.Model):
+    title = models.CharField(max_length=300)
+    authors = models.CharField(max_length=500)
+    venue = models.CharField(max_length=200)
+    year = models.CharField(max_length=4)
+    doi = models.CharField(max_length=100, blank=True)
+    link = models.URLField(blank=True)
+    abstract = models.TextField(blank=True)
+    highlighted = models.BooleanField(default=False)
+    authors_from_team = models.ManyToManyField(TeamMember, blank=True, related_name='publications')
+    
+    class Meta:
+        ordering = ['-year', 'title']
+        verbose_name = "Publication"
+        verbose_name_plural = "Publications"
+    
+    def __str__(self):
+        return self.title
+
+class AboutContent(models.Model):
+    mission = models.TextField()
+    history = models.TextField()
+    
+    class Meta:
+        verbose_name = "About Page Content"
+        verbose_name_plural = "About Page Content"
+    
+    def __str__(self):
+        return "About Page Content"
+
+class LabInfo(models.Model):
+    department = models.CharField(max_length=200)
+    building = models.CharField(max_length=200)
+    room = models.CharField(max_length=50)
+    institution = models.CharField(max_length=200)
+    address = models.TextField()
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    map_embed_url = models.URLField(help_text="Google Maps embed URL")
+    
+    class Meta:
+        verbose_name = "Lab Information"
+        verbose_name_plural = "Lab Information"
+    
+    def __str__(self):
+        return f"Lab at {self.institution}"
+
+class FundingSource(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    website = models.URLField(blank=True)
+    logo = models.ImageField(upload_to='funding/', blank=True, null=True)
+    
+    class Meta:
+        verbose_name = "Funding Source"
+        verbose_name_plural = "Funding Sources"
+    
+    def __str__(self):
+        return self.name
+
+class Collaborator(models.Model):
+    institution = models.CharField(max_length=200)
+    description = models.TextField()
+    website = models.URLField(blank=True)
+    
+    class Meta:
+        verbose_name = "Collaborator"
+        verbose_name_plural = "Collaborators"
+    
+    def __str__(self):
+        return self.institution

@@ -13,14 +13,92 @@
     </p>
 </div>
 
-<h3 class="mb-4">Meet the Team</h3>
-
+{% if pis %}
+<h3 class="mb-4">Principal Investigators</h3>
 <div class="row">
-    {% for member in team_members %}
+    {% for member in pis %}
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{% static member.image %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+            {% if member.personal_website %}
+            <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if postdocs %}
+<h3 class="mb-4">Postdoctoral Researchers</h3>
+<div class="row">
+    {% for member in postdocs %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+            {% if member.personal_website %}
+            <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if phd_students %}
+<h3 class="mb-4">PhD Students</h3>
+<div class="row">
+    {% for member in phd_students %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+            {% if member.personal_website %}
+            <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if masters %}
+<h3 class="mb-4">Master's Students</h3>
+<div class="row">
+    {% for member in masters %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
             {% else %}
             <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
             {% endif %}
@@ -32,12 +110,81 @@
             {% endif %}
         </div>
     </div>
-    {% empty %}
-    <div class="col-12">
-        <p>No team members available at the moment.</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if undergrads %}
+<h3 class="mb-4">Undergraduate Students</h3>
+<div class="row">
+    {% for member in undergrads %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+        </div>
     </div>
     {% endfor %}
 </div>
+{% endif %}
+
+{% if staff %}
+<h3 class="mb-4">Staff</h3>
+<div class="row">
+    {% for member in staff %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if alumni %}
+<h3 class="mb-4">Alumni</h3>
+<div class="row">
+    {% for member in alumni %}
+    <div class="col-md-4 mb-5">
+        <div class="team-member">
+            {% if member.image %}
+            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            {% else %}
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            {% endif %}
+            <h4>{{ member.name }}</h4>
+            <p class="text-muted mb-3">{{ member.title }}</p>
+            <p>{{ member.bio }}</p>
+            {% if member.email %}
+            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+            {% endif %}
+            {% if member.personal_website %}
+            <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
 <div class="mt-5">
     <h3>Join Our Team</h3>
@@ -51,11 +198,7 @@
                     <p>
                         We are always looking for motivated graduate students to join our group. 
                         If you are interested in our research and would like to apply, please 
-                        send your CV and research statement to [contact email].
-                    </p>
-                    <p>
-                        Read more about our graduate program and application process: 
-                        <a href="#">Graduate Program</a>
+                        send your CV and research statement to our email.
                     </p>
                 </div>
             </div>
@@ -69,7 +212,7 @@
                     <p>
                         We occasionally have openings for postdoctoral researchers. 
                         Current openings will be posted here. For general inquiries, 
-                        please contact [principal investigator name].
+                        please contact us.
                     </p>
                 </div>
             </div>

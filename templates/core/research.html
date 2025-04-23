@@ -9,18 +9,44 @@
 <div class="mb-5">
     <h3>Research Overview</h3>
     <p>
-        Our research focuses on [provide a general overview of your research group's focus area]. 
+        Our research focuses on various areas of interest. 
         We are particularly interested in developing new methodologies and applications in the following areas:
     </p>
 </div>
 
+{% for area in research_areas %}
+<div class="mb-5">
+    <h3 class="mb-3">{{ area.name }}</h3>
+    <p>{{ area.description }}</p>
+    
+    <div class="row">
+        {% for project in area.projects.all %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description }}</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No research projects available for this area at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% empty %}
 <h3 class="mb-3">Current Research Projects</h3>
 <div class="row">
     {% for project in research_projects %}
     <div class="col-md-4 mb-4">
         <div class="card h-100">
             {% if project.image %}
-            <img src="{% static project.image %}" class="card-img-top" alt="{{ project.title }}">
+            <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ project.title }}</h5>
@@ -34,6 +60,7 @@
     </div>
     {% endfor %}
 </div>
+{% endfor %}
 
 <div class="mt-5">
     <h3>Research Facilities</h3>
@@ -66,6 +93,17 @@
         We collaborate with several other research groups and institutions:
     </p>
     <ul>
+        {% for collaborator in collaborators %}
+        <li>
+            <strong>
+                {% if collaborator.website %}
+                <a href="{{ collaborator.website }}" target="_blank">{{ collaborator.institution }}</a>
+                {% else %}
+                {{ collaborator.institution }}
+                {% endif %}
+            </strong> - {{ collaborator.description }}
+        </li>
+        {% empty %}
         <li>
             <strong>Institution 1</strong> - Brief description of collaboration
         </li>
@@ -75,6 +113,7 @@
         <li>
             <strong>Institution 3</strong> - Brief description of collaboration
         </li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %} 
