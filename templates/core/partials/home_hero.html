@@ -1,18 +1,33 @@
 {% load static %}
 
 <div class="banner-container position-relative">
-    <div class="row g-0">
-        <div class="col-md-3">
-            <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="img-fluid banner-image">
-        </div>
-        <div class="col-md-3">
-            <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="img-fluid banner-image">
-        </div>
-        <div class="col-md-3">
-            <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="img-fluid banner-image">
-        </div>
-        <div class="col-md-3">
-            <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="img-fluid banner-image">
+    <div class="banner-carousel">
+        <div class="carousel-track">
+            <div class="carousel-slide">
+                <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
+            </div>
+            <!-- Duplicate slides for infinite looping -->
+            <div class="carousel-slide">
+                <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
+            </div>
         </div>
     </div>
     <div class="banner-overlay"></div>

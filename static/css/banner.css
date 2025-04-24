@@ -7,11 +7,43 @@
 .banner-container {
     height: 400px;
     overflow: hidden;
+    position: relative;
+}
+
+/* Carousel styling */
+.banner-carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    width: 800%; /* Eight slides total (4 original + 4 duplicate) */
+    position: absolute;
+    left: 0;
+    animation: carousel 30s linear infinite;
+}
+
+@keyframes carousel {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Move to show the duplicate set */
+    }
+}
+
+.carousel-slide {
+    width: 12.5%; /* Each image takes 1/8 of the track */
+    height: 400px;
+    flex-shrink: 0;
 }
 
 .banner-image {
     width: 100%;
-    height: 400px;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -22,6 +54,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1;
 }
 
 .banner-text-container {
@@ -30,4 +63,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 } 
