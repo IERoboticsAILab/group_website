@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import (
     HomeContent, ResearchArea, ResearchProject, TeamMember,
-    Publication, AboutContent, LabInfo, FundingSource, Collaborator
+    Publication, AboutContent, LabInfo, FundingSource, Collaborator,
+    BannerImage
 )
 
 # Create your views here.
@@ -22,11 +23,15 @@ def home(request):
     # Get highlighted publications
     highlighted_pubs = Publication.objects.filter(highlighted=True)[:3]
     
+    # Get active banner images
+    banner_images = BannerImage.objects.filter(active=True)
+    
     context = {
         'home_content': home_content,
         'featured_projects': featured_projects,
         'featured_members': team_members,
         'highlighted_publications': highlighted_pubs,
+        'banner_images': banner_images,
     }
     
     return render(request, 'core/home.html', context)

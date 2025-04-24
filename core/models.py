@@ -2,6 +2,21 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 
+class BannerImage(models.Model):
+    title = models.CharField(max_length=100, help_text="Image title for administrative purposes")
+    image = models.ImageField(upload_to='banner/', help_text="Image will be resized to fit banner height")
+    description = models.CharField(max_length=200, blank=True, help_text="Optional brief description of the image")
+    order = models.PositiveIntegerField(default=0, help_text="Order in which the image will be displayed")
+    active = models.BooleanField(default=True, help_text="Whether this image is displayed in the banner")
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Banner Image"
+        verbose_name_plural = "Banner Images"
+    
+    def __str__(self):
+        return self.title
+
 class HomeContent(models.Model):
     headline = models.CharField(max_length=200)
     subheadline = models.TextField()

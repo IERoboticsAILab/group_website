@@ -20,7 +20,7 @@
 
 .carousel-track {
     display: flex;
-    width: 200%; /* Two complete sets of 4 images */
+    width: 200%; /* Two sets of images, regardless of count */
     position: absolute;
     left: 0;
     animation: carousel 40s linear infinite;
@@ -35,15 +35,21 @@
     }
 }
 
+/* Calculated width based on number of images */
+.carousel-slide {
+    height: 400px;
+    flex-shrink: 0;
+    /* The width will be dynamically set with inline styles */
+}
+
+/* Fallback for when we know there are exactly 8 slides */
+.carousel-slide:nth-child(n) {
+    width: calc(100% / 8); /* Default for 8 slides (4 original + 4 duplicate) */
+}
+
 /* Pause animation on hover for better UX */
 .banner-carousel:hover .carousel-track {
     animation-play-state: paused;
-}
-
-.carousel-slide {
-    width: calc(100% / 8); /* Each slide is 1/8 of total carousel (1/4 of visible area) */
-    height: 400px;
-    flex-shrink: 0;
 }
 
 .banner-image {
