@@ -48,11 +48,13 @@
     <div class="banner-overlay"></div>
     <div class="banner-text-container text-center text-white">
         {% if home_content %}
+            <img src="{% static 'images/cpl.svg' %}" width="300" height="200" alt="CyPhy" style="margin: 20px; filter: brightness(0) invert(1);" class="cyphy-logo">
             <h1 class="display-4 fw-bold">{{ home_content.headline }}</h1>
             <p class="lead">{{ home_content.subheadline }}</p>
         {% else %}
+            <img src="{% static 'images/cpl.svg' %}" width="300" height="200" alt="CyPhy" style="margin: 20px; filter: brightness(0) invert(1);" class="cyphy-logo">
             <h1 class="display-4 fw-bold">Cyber-Physical Life</h1>
-            <p class="lead">CyPhy /ˈsaɪˌfaɪ/ Life</p>
+            <p class="lead">CyPhy &#47;&#712;sa&#618;&#8228;fa&#618;&#47; Life</p>
         {% endif %}
     </div>
 </div>
