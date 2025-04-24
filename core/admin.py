@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from .models import (
     HomeContent, ResearchArea, ResearchProject, TeamMember, 
     Publication, LabInfo,
-    BannerImage, ResearchLine
+    BannerImage, ResearchLine, SocialMedia
 )
 
 # Content Management
@@ -103,4 +103,13 @@ class ResearchLineAdmin(admin.ModelAdmin):
             'fields': ('order',)
         }),
     )
+
+@admin.register(SocialMedia)
+class SocialMediaAdmin(admin.ModelAdmin):
+    app_label = 'Content Management'
+    def has_add_permission(self, request):
+        # Only allow one instance of SocialMedia
+        if self.model.objects.exists():
+            return False
+        return super().has_add_permission(request)
 

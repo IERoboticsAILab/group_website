@@ -169,3 +169,17 @@ class LabInfo(models.Model):
     
     def __str__(self):
         return f"Lab at {self.institution}"
+
+class SocialMedia(models.Model):
+    github = models.URLField(blank=True, help_text="GitHub repository URL")
+    youtube = models.URLField(blank=True, help_text="YouTube channel URL")
+    
+    class Meta:
+        verbose_name = "Social Media Links"
+        verbose_name_plural = "Social Media Links"
+    
+    def __str__(self):
+        return "Social Media Links"
+    
+    def has_any_links(self):
+        return bool(self.github or self.youtube)
