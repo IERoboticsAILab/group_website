@@ -4,75 +4,17 @@
 {% block title %}Research Group - Home{% endblock %}
 
 {% block content %}
-<div class="jumbotron bg-light p-5 rounded">
-    {% if home_content %}
-        <h1 class="display-4">{{ home_content.headline }}</h1>
-        <p class="lead">{{ home_content.subheadline }}</p>
-        <hr class="my-4">
-        <p>{{ home_content.mission_statement }}</p>
-    {% else %}
-        <h1 class="display-4">Welcome to Our Research Group</h1>
-        <p class="lead">We are a dedicated team of researchers working on cutting-edge problems in our field.</p>
-        <hr class="my-4">
-        <p>Our mission is to advance scientific knowledge and develop innovative solutions through collaborative research.</p>
-    {% endif %}
-</div>
+{% include 'core/partials/home_hero.html' %}
 
 <div class="row mt-5">
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Latest Research</h5>
-                {% if featured_projects %}
-                    <p class="card-text">Check out our latest research projects.</p>
-                    <ul class="list-unstyled">
-                        {% for project in featured_projects %}
-                            <li class="mb-2"><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="card-text">Our team is working on cutting-edge research projects.</p>
-                {% endif %}
-                <a href="{% url 'projects' %}" class="btn btn-outline-primary">View Projects</a>
-            </div>
-        </div>
+        {% include 'core/partials/home_latest_research.html' %}
     </div>
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Meet the Team</h5>
-                {% if featured_members %}
-                    <p class="card-text">Our team includes experts from various backgrounds.</p>
-                    <ul class="list-unstyled">
-                        {% for member in featured_members %}
-                            <li class="mb-2">{{ member.name }}, {{ member.title }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="card-text">Our diverse group of researchers brings together expertise from multiple disciplines.</p>
-                {% endif %}
-            </div>
-        </div>
+        {% include 'core/partials/home_team.html' %}
     </div>
     <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Recent Publications</h5>
-                {% if highlighted_publications %}
-                    <ul class="list-unstyled">
-                        {% for pub in highlighted_publications %}
-                            <li class="mb-2">
-                                <strong>{{ pub.title }}</strong>
-                                <div class="small text-muted">{{ pub.venue }}</div>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="card-text">Check out our latest peer-reviewed publications and conference papers.</p>
-                {% endif %}
-                <a href="{% url 'publications' %}" class="btn btn-outline-primary">View Publications</a>
-            </div>
-        </div>
+        {% include 'core/partials/home_publications.html' %}
     </div>
 </div>
 {% endblock %} 

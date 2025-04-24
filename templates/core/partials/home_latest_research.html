@@ -1,0 +1,16 @@
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Latest Research</h5>
+        {% if featured_projects %}
+            <p class="card-text">Check out our latest research projects.</p>
+            <ul class="list-unstyled">
+                {% for project in featured_projects %}
+                    <li class="mb-2"><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="card-text">Our team is working on cutting-edge research projects.</p>
+        {% endif %}
+        <a href="{% url 'projects' %}" class="btn btn-outline-primary">View Projects</a>
+    </div>
+</div> 

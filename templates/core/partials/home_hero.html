@@ -1,0 +1,13 @@
+<div class="jumbotron bg-light p-5 rounded">
+    {% if home_content %}
+        <h1 class="display-4">{{ home_content.headline }}</h1>
+        <p class="lead">{{ home_content.subheadline }}</p>
+        <hr class="my-4">
+        <p>{{ home_content.mission_statement }}</p>
+    {% else %}
+        <h1 class="display-4">Welcome to Our Research Group</h1>
+        <p class="lead">We are a dedicated team of researchers working on cutting-edge problems in our field.</p>
+        <hr class="my-4">
+        <p>Our mission is to advance scientific knowledge and develop innovative solutions through collaborative research.</p>
+    {% endif %}
+</div> 
