@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import (
     HomeContent, ResearchArea, ResearchProject, TeamMember,
-    Publication, AboutContent, LabInfo, FundingSource, Collaborator,
+    Publication, LabInfo,
     BannerImage
 )
 
@@ -36,47 +36,6 @@ def home(request):
     
     return render(request, 'core/home.html', context)
 
-def about(request):
-    # Get about content or use a default
-    try:
-        about_content = AboutContent.objects.first()
-    except AboutContent.DoesNotExist:
-        about_content = None
-    
-    # Get lab info
-    try:
-        lab_info = LabInfo.objects.first()
-    except LabInfo.DoesNotExist:
-        lab_info = None
-    
-    # Get funding sources
-    funding_sources = FundingSource.objects.all()
-    
-    context = {
-        'about_content': about_content,
-        'lab_info': lab_info,
-        'funding_sources': funding_sources,
-    }
-    
-    return render(request, 'core/about.html', context)
-
-def research(request):
-    # Get all research areas with their projects
-    research_areas = ResearchArea.objects.all()
-    
-    # Get all research projects
-    research_projects = ResearchProject.objects.all()
-    
-    # Get collaborators
-    collaborators = Collaborator.objects.all()
-    
-    context = {
-        'research_areas': research_areas,
-        'research_projects': research_projects,
-        'collaborators': collaborators,
-    }
-    
-    return render(request, 'core/research.html', context)
 
 def people(request):
     # Get active team members by role

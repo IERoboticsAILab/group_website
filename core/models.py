@@ -143,28 +143,3 @@ class LabInfo(models.Model):
     
     def __str__(self):
         return f"Lab at {self.institution}"
-
-class FundingSource(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    website = models.URLField(blank=True)
-    logo = models.ImageField(upload_to='funding/', blank=True, null=True)
-    
-    class Meta:
-        verbose_name = "Funding Source"
-        verbose_name_plural = "Funding Sources"
-    
-    def __str__(self):
-        return self.name
-
-class Collaborator(models.Model):
-    institution = models.CharField(max_length=200)
-    description = models.TextField()
-    website = models.URLField(blank=True)
-    
-    class Meta:
-        verbose_name = "Collaborator"
-        verbose_name_plural = "Collaborators"
-    
-    def __str__(self):
-        return self.institution
