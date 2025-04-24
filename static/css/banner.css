@@ -20,10 +20,10 @@
 
 .carousel-track {
     display: flex;
-    width: 800%; /* Eight slides total (4 original + 4 duplicate) */
+    width: 200%; /* Two complete sets of 4 images */
     position: absolute;
     left: 0;
-    animation: carousel 30s linear infinite;
+    animation: carousel 40s linear infinite;
 }
 
 @keyframes carousel {
@@ -31,12 +31,17 @@
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-50%); /* Move to show the duplicate set */
+        transform: translateX(-50%); /* Move by one set of images */
     }
 }
 
+/* Pause animation on hover for better UX */
+.banner-carousel:hover .carousel-track {
+    animation-play-state: paused;
+}
+
 .carousel-slide {
-    width: 12.5%; /* Each image takes 1/8 of the track */
+    width: calc(100% / 8); /* Each slide is 1/8 of total carousel (1/4 of visible area) */
     height: 400px;
     flex-shrink: 0;
 }
