@@ -42,9 +42,11 @@
     </nav>
 
     <!-- Main Content -->
+    {% block content_full_width %}
     <main class="container py-4">
         {% block content %}{% endblock %}
     </main>
+    {% endblock %}
 
     <!-- Footer -->
     <footer class="bg-dark text-light py-4">

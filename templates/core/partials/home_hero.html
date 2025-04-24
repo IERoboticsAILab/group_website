@@ -1,13 +1,28 @@
-<div class="jumbotron bg-light p-5 rounded">
-    {% if home_content %}
-        <h1 class="display-4">{{ home_content.headline }}</h1>
-        <p class="lead">{{ home_content.subheadline }}</p>
-        <hr class="my-4">
-        <p>{{ home_content.mission_statement }}</p>
-    {% else %}
-        <h1 class="display-4">Welcome to Our Research Group</h1>
-        <p class="lead">We are a dedicated team of researchers working on cutting-edge problems in our field.</p>
-        <hr class="my-4">
-        <p>Our mission is to advance scientific knowledge and develop innovative solutions through collaborative research.</p>
-    {% endif %}
+{% load static %}
+
+<div class="banner-container position-relative">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="img-fluid banner-image">
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="img-fluid banner-image">
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="img-fluid banner-image">
+        </div>
+        <div class="col-md-3">
+            <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="img-fluid banner-image">
+        </div>
+    </div>
+    <div class="banner-overlay"></div>
+    <div class="banner-text-container text-center text-white">
+        {% if home_content %}
+            <h1 class="display-4 fw-bold">{{ home_content.headline }}</h1>
+            <p class="lead">{{ home_content.subheadline }}</p>
+        {% else %}
+            <h1 class="display-4 fw-bold">Research Group</h1>
+            <p class="lead">Advancing knowledge through collaborative innovation</p>
+        {% endif %}
+    </div>
 </div> 
