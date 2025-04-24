@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from .models import (
     HomeContent, ResearchArea, ResearchProject, TeamMember, 
     Publication, LabInfo,
-    BannerImage
+    BannerImage, ResearchLine
 )
 
 # Content Management
@@ -86,4 +86,21 @@ class BannerImageAdmin(admin.ModelAdmin):
         return "No Image"
     
     image_preview.short_description = 'Preview'
+
+@admin.register(ResearchLine)
+class ResearchLineAdmin(admin.ModelAdmin):
+    app_label = 'Research'
+    list_display = ('title', 'research_area', 'order')
+    list_filter = ('research_area',)
+    list_editable = ('order',)
+    prepopulated_fields = {'slug': ('title',)}
+    search_fields = ('title', 'description')
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'description', 'image', 'research_area')
+        }),
+        ('Display Options', {
+            'fields': ('order',)
+        }),
+    )
 

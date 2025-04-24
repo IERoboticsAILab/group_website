@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Research Group - {{ research_line.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'projects' %}">Projects</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ research_line.title }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-8">
+            <h1 class="mb-4">{{ research_line.title }}</h1>
+            {% if research_line.research_area %}
+            <p class="badge bg-secondary mb-3">{{ research_line.research_area.name }}</p>
+            {% endif %}
+            <div class="mb-4">
+                {{ research_line.description|linebreaks }}
+            </div>
+        </div>
+        {% if research_line.image %}
+        <div class="col-md-4">
+            <img src="{{ research_line.image.url }}" class="img-fluid rounded" alt="{{ research_line.title }}">
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">Projects in this Research Line</h2>
+        </div>
+        {% for project in research_line.projects.all %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light text-center p-5">
+                    <i class="bi bi-diagram-project" style="font-size: 3rem;"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description|truncatewords:30 }}</p>
+                    <a href="{{ project.get_absolute_url }}" class="btn btn-primary stretched-link">View Project</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No projects available in this research line at the moment.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 

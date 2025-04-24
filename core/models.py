@@ -42,12 +42,37 @@ class ResearchArea(models.Model):
     def __str__(self):
         return self.name
 
+class ResearchLine(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to='research_lines/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
+    research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='research_lines')
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Research Line"
+        verbose_name_plural = "Research Lines"
+    
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('research_line_detail', kwargs={'slug': self.slug})
+
 class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
     featured = models.BooleanField(default=False)
     research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
+    research_line = models.ForeignKey(ResearchLine, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     content = models.TextField(blank=True, help_text="Detailed content for project detail page")
@@ -82,8 +107,9 @@ class TeamMember(models.Model):
     name = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    bio = models.TextField()
     email = models.EmailField(blank=True)
+    github = models.URLField(blank=True)
+    linkedin = models.URLField(blank=True)
     personal_website = models.URLField(blank=True)
     image = models.ImageField(upload_to='members/', blank=True, null=True)
     order = models.PositiveIntegerField(default=0)

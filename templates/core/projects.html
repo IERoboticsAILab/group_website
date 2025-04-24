@@ -8,9 +8,43 @@
 
 <div class="mb-4">
     <p>
-        Our research group works on a variety of projects. 
+        Our research group works on a variety of projects organized into research lines. 
         Explore our ongoing and completed research projects below.
     </p>
+</div>
+
+<!-- Research Lines Section -->
+<div class="mb-5">
+    <h2 class="mb-4">Research Lines</h2>
+    <div class="row">
+        {% for research_line in research_lines %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if research_line.image %}
+                <img src="{{ research_line.image.url }}" class="card-img-top" alt="{{ research_line.title }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light text-center p-5">
+                    <i class="bi bi-diagram-3" style="font-size: 3rem;"></i>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ research_line.title }}</h5>
+                    {% if research_line.research_area %}
+                    <p class="badge bg-secondary mb-2">{{ research_line.research_area.name }}</p>
+                    {% endif %}
+                    <p class="card-text">{{ research_line.description|truncatewords:30 }}</p>
+                    <a href="{{ research_line.get_absolute_url }}" class="btn btn-primary stretched-link">View Research Line</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No research lines available at the moment.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
 <!-- Filter projects by research area -->
