@@ -33,16 +33,6 @@ class Migration(migrations.Migration):
                 ),
                 ("order", models.PositiveIntegerField(default=0)),
                 ("slug", models.SlugField(blank=True, max_length=250, unique=True)),
-                (
-                    "research_area",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        related_name="research_lines",
-                        to="core.researcharea",
-                    ),
-                ),
             ],
             options={
                 "verbose_name": "Research Line",

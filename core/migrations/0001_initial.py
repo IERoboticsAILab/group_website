@@ -211,16 +211,6 @@ class Migration(migrations.Migration):
                 ),
                 ("featured", models.BooleanField(default=False)),
                 ("order", models.PositiveIntegerField(default=0)),
-                (
-                    "research_area",
-                    models.ForeignKey(
-                        blank=True,
-                        null=True,
-                        on_delete=django.db.models.deletion.SET_NULL,
-                        related_name="projects",
-                        to="core.researcharea",
-                    ),
-                ),
             ],
             options={
                 "verbose_name": "Research Project",

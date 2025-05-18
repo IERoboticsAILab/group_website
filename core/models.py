@@ -29,26 +29,12 @@ class HomeContent(models.Model):
     def __str__(self):
         return "Home Page Content"
 
-class ResearchArea(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    order = models.PositiveIntegerField(default=0)
-    
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Research Area"
-        verbose_name_plural = "Research Areas"
-    
-    def __str__(self):
-        return self.name
-
 class ResearchLine(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to='research_lines/', blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='research_lines')
     
     class Meta:
         ordering = ['order']
@@ -71,7 +57,6 @@ class ResearchProject(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
     featured = models.BooleanField(default=False)
-    research_area = models.ForeignKey(ResearchArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
     research_line = models.ForeignKey(ResearchLine, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)

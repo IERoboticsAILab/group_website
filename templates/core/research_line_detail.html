@@ -19,9 +19,6 @@
     <div class="row mb-5">
         <div class="col-md-8">
             <h1 class="mb-4">{{ research_line.title }}</h1>
-            {% if research_line.research_area %}
-            <p class="badge bg-secondary mb-3">{{ research_line.research_area.name }}</p>
-            {% endif %}
             <div class="mb-4">
                 {{ research_line.description|linebreaks }}
             </div>

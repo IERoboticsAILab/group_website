@@ -29,9 +29,6 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ research_line.title }}</h5>
-                    {% if research_line.research_area %}
-                    <p class="badge bg-secondary mb-2">{{ research_line.research_area.name }}</p>
-                    {% endif %}
                     <p class="card-text">{{ research_line.description|truncatewords:30 }}</p>
                     <a href="{{ research_line.get_absolute_url }}" class="btn btn-primary stretched-link">View Research Line</a>
                 </div>
@@ -47,21 +44,11 @@
     </div>
 </div>
 
-<!-- Filter projects by research area -->
-<div class="mb-4">
-    <label for="project-area-filter" class="form-label">Filter by Research Area:</label>
-    <select id="project-area-filter" class="form-select w-auto">
-        <option value="all" selected>All Areas</option>
-        {% for area in research_areas %}
-        <option value="{{ area.id }}">{{ area.name }}</option>
-        {% endfor %}
-    </select>
-</div>
 
 <!-- Projects Grid -->
 <div class="row" id="projects-container">
     {% for project in projects %}
-    <div class="col-md-4 mb-4 project-item" data-area="{{ project.research_area.id|default:'none' }}">
+    <div class="col-md-4 mb-4 project-item">
         <div class="card h-100">
             {% if project.image %}
             <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
@@ -72,9 +59,6 @@
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ project.title }}</h5>
-                {% if project.research_area %}
-                <p class="badge bg-secondary mb-2">{{ project.research_area.name }}</p>
-                {% endif %}
                 <p class="card-text">{{ project.description|truncatewords:30 }}</p>
                 <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary stretched-link">Learn More</a>
             </div>

@@ -23,15 +23,7 @@
         <p>
             Our primary research interests include:
         </p>
-        <ul>
-            {% for area in research_areas %}
-                <li><strong>{{ area.name }}:</strong> {{ area.description }}</li>
-            {% empty %}
-                <li><strong>Area 1:</strong> Description of research area 1</li>
-                <li><strong>Area 2:</strong> Description of research area 2</li>
-                <li><strong>Area 3:</strong> Description of research area 3</li>
-            {% endfor %}
-        </ul>
+        
         
         <h3 class="mt-4">History</h3>
         {% if about_content %}

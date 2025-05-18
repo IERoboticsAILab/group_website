@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import (
-    HomeContent, ResearchArea, ResearchProject, TeamMember,
+    HomeContent, ResearchProject, TeamMember,
     Publication, LabInfo,
     BannerImage, ResearchLine
 )
@@ -78,16 +78,10 @@ def publications(request):
 def projects(request):
     # Get all projects
     all_projects = ResearchProject.objects.all()
-    
-    # Get research areas for filtering
-    research_areas = ResearchArea.objects.all()
-    
-    # Get research lines
     research_lines = ResearchLine.objects.all()
     
     context = {
         'projects': all_projects,
-        'research_areas': research_areas,
         'research_lines': research_lines,
     }
     
@@ -97,17 +91,8 @@ def project_detail(request, slug):
     # Get the project
     project = get_object_or_404(ResearchProject, slug=slug)
     
-    # Get related projects from the same research area
-    if project.research_area:
-        related_projects = ResearchProject.objects.filter(
-            research_area=project.research_area
-        ).exclude(id=project.id)[:3]
-    else:
-        related_projects = ResearchProject.objects.exclude(id=project.id)[:3]
-    
     context = {
         'project': project,
-        'related_projects': related_projects,
     }
     
     return render(request, 'core/project_detail.html', context)
@@ -116,23 +101,13 @@ def research_line_detail(request, slug):
     # Get the research line
     research_line = get_object_or_404(ResearchLine, slug=slug)
     
-    # Get related research lines from the same research area
-    if research_line.research_area:
-        related_lines = ResearchLine.objects.filter(
-            research_area=research_line.research_area
-        ).exclude(id=research_line.id)[:3]
-    else:
-        related_lines = ResearchLine.objects.exclude(id=research_line.id)[:3]
-    
     context = {
         'research_line': research_line,
-        'related_lines': related_lines,
     }
     
     return render(request, 'core/research_line_detail.html', context)
 
 def contact(request):
-    # Get lab info for contact details
     try:
         lab_info = LabInfo.objects.first()
     except LabInfo.DoesNotExist:
