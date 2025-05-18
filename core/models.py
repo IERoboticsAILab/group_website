@@ -35,9 +35,12 @@ class HomeContent(models.Model):
 class ResearchLine(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
+    banner_image = models.ImageField(upload_to='research_lines/banners/', blank=True, null=True, help_text="Banner image for the research line")
     image = models.ImageField(upload_to='research_lines/', blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
+    team_members = models.ManyToManyField('TeamMember', blank=True, related_name='research_lines')
+    publications = models.ManyToManyField('Publication', blank=True, related_name='research_lines')
     
     class Meta:
         ordering = ['order']
@@ -54,6 +57,20 @@ class ResearchLine(models.Model):
     
     def get_absolute_url(self):
         return reverse('research_line_detail', kwargs={'slug': self.slug})
+
+class ResearchLineGalleryImage(models.Model):
+    research_line = models.ForeignKey(ResearchLine, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='research_lines/gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Gallery Image"
+        verbose_name_plural = "Gallery Images"
+        
+    def __str__(self):
+        return f"Image for {self.research_line.title}"
 
 class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
@@ -92,24 +109,24 @@ class TeamMember(models.Model):
         ('ALUMNI', 'Alumni'),
     ]
     
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    position = models.CharField(max_length=200, blank=True)
     email = models.EmailField(blank=True)
     github = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
     personal_website = models.URLField(blank=True)
     image = models.ImageField(upload_to='members/', blank=True, null=True)
-    order = models.PositiveIntegerField(default=0)
-    active = models.BooleanField(default=True)
+    alum = models.BooleanField(default=False)
     
     class Meta:
-        ordering = ['order', 'name']
+        ordering = ['last_name']
         verbose_name = "Team Member"
         verbose_name_plural = "Team Members"
     
     def __str__(self):
-        return self.name
+        return f"{self.first_name} {self.last_name}"
 
 class Publication(models.Model):
     title = models.CharField(max_length=300)

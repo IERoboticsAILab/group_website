@@ -61,10 +61,10 @@ class PublicationAdmin(admin.ModelAdmin):
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):
     app_label = 'Team'
-    list_display = ('name', 'title', 'role', 'email', 'active', 'order')
-    list_filter = ('role', 'active')
-    list_editable = ('active', 'order')
-    search_fields = ('name', 'email', 'bio')
+    list_display = ('first_name', 'last_name', 'role', 'email', 'alum')
+    list_filter = ('role', 'alum')
+    list_editable = ('alum',)
+    search_fields = ('first_name', 'last_name', 'email')
 
 
 # Media & Display
