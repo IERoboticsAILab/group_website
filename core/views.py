@@ -40,7 +40,7 @@ def home(request):
 def people(request):
     # Get active team members by role
     pis = TeamMember.objects.filter(principal_investigator=True)
-    people = TeamMember.objects.filter(principal_investigator=False)
+    people = TeamMember.objects.filter(principal_investigator=False,alum=False)
     alumni = TeamMember.objects.filter(alum=True)
     
     context = {
