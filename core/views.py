@@ -49,11 +49,11 @@ def people(request):
     return render(request, 'core/people.html', context)
 
 def publications(request):
-    # Get all publications ordered by year
-    all_publications = Publication.objects.all()
+    # Get all publications ordered by date
+    all_publications = Publication.objects.all().order_by('-date')
     
     # Get unique years for filter
-    publication_years = Publication.objects.values_list('year', flat=True).distinct().order_by('-year')
+    publication_years = Publication.objects.dates('date', 'year', order='DESC')
     
     context = {
         'publications': all_publications,

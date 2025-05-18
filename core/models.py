@@ -148,16 +148,13 @@ class TeamMember(models.Model):
 class Publication(models.Model):
     title = models.CharField(max_length=300)
     authors = models.CharField(max_length=500)
-    venue = models.CharField(max_length=200)
-    year = models.CharField(max_length=4)
-    doi = models.CharField(max_length=100, blank=True)
-    link = models.URLField(blank=True)
+    paperlink = models.URLField(blank=True)
+    pdflink = models.URLField(blank=True)
     abstract = models.TextField(blank=True)
-    highlighted = models.BooleanField(default=False)
-    authors_from_team = models.ManyToManyField(TeamMember, blank=True, related_name='publications')
+    date = models.DateField(blank=True, null=True)
     
     class Meta:
-        ordering = ['-year', 'title']
+        ordering = ['-date', 'title']
         verbose_name = "Publication"
         verbose_name_plural = "Publications"
     

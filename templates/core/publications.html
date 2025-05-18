@@ -19,7 +19,7 @@
     <select id="publication-year-filter" class="form-select w-auto">
         <option value="all" selected>All Years</option>
         {% for year in publication_years %}
-        <option value="{{ year }}">{{ year }}</option>
+        <option value="{{ year|date:'Y' }}">{{ year|date:'Y' }}</option>
         {% endfor %}
     </select>
 </div>
@@ -27,13 +27,10 @@
 <!-- Publications List -->
 <div class="publications-list">
     {% for pub in publications %}
-    <div class="publication" data-year="{{ pub.year }}">
+    <div class="publication" data-year="{{ pub.date|date:'Y' }}">
         <h4>{{ pub.title }}</h4>
         <p class="authors">{{ pub.authors }}</p>
-        <p class="venue">{{ pub.venue }}</p>
-        {% if pub.doi %}
-        <p class="doi">DOI: <a href="https://doi.org/{{ pub.doi }}" target="_blank">{{ pub.doi }}</a></p>
-        {% endif %}
+        <p class="date">{{ pub.date|date:"F Y" }}</p>
         {% if pub.abstract %}
         <div class="abstract-toggle mb-2">
             <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#abstract-{{ forloop.counter }}" role="button">
@@ -46,35 +43,20 @@
             </div>
         </div>
         {% endif %}
-        {% if pub.link %}
-        <p><a href="{{ pub.link }}" class="btn btn-sm btn-outline-primary" target="_blank">View Publication</a></p>
-        {% endif %}
+        <div class="publication-links">
+            {% if pub.paperlink %}
+            <a href="{{ pub.paperlink }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">View Publication</a>
+            {% endif %}
+            {% if pub.pdflink %}
+            <a href="{{ pub.pdflink }}" class="btn btn-sm btn-outline-primary" target="_blank">Download PDF</a>
+            {% endif %}
+        </div>
     </div>
     {% empty %}
     <p>No publications available at the moment.</p>
     {% endfor %}
 </div>
 
-<!-- Citation Information -->
-<div class="mt-5">
-    <h3>Citing Our Work</h3>
-    <p>
-        If you use our research in your work, please cite our papers. For general references to our research group, you can use:
-    </p>
-    <div class="card">
-        <div class="card-body bg-light">
-            <pre>@article{ResearchGroup2023,
-  author = {[Author List]},
-  title = {[Title of Work]},
-  journal = {[Journal Name]},
-  year = {[Year]},
-  volume = {[Volume]},
-  pages = {[Pages]},
-  doi = {[DOI]}
-}</pre>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}

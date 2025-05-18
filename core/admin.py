@@ -68,11 +68,9 @@ class ResearchProjectAdmin(admin.ModelAdmin):
 @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'venue', 'year', 'highlighted')
-    list_filter = ('year', 'highlighted')
-    list_editable = ('highlighted',)
+    list_display = ('title', 'date')
+    list_filter = ('date',)
     search_fields = ('title', 'authors', 'abstract')
-    filter_horizontal = ('authors_from_team',)
 
 # Team
 @admin.register(TeamMember)
