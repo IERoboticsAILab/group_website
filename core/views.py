@@ -32,6 +32,8 @@ def home(request):
         'featured_members': team_members,
         'highlighted_publications': highlighted_pubs,
         'banner_images': banner_images,
+        'markdown_content': home_content.markdown_content if home_content else '',
+        'youtube_video_url': home_content.youtube_video_url if home_content else '',
     }
     
     return render(request, 'core/home.html', context)

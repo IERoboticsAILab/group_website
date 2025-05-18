@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_extras %}
 
 {% block title %}Research Group - Home{% endblock %}
 
@@ -13,16 +14,22 @@
 </div>
 
 <main class="container py-4">
-    <div class="row mt-5">
-        <div class="col-md-4">
-            {% include 'core/partials/home_latest_research.html' %}
+  <div class="row align-items-start">
+    <div class="col-md-7">
+      {% if markdown_content %}
+        <div class="markdown-content">
+          {{ markdown_content|markdown2safe }}
         </div>
-        <div class="col-md-4">
-            {% include 'core/partials/home_team.html' %}
-        </div>
-        <div class="col-md-4">
-            {% include 'core/partials/home_publications.html' %}
-        </div>
+      {% endif %}
     </div>
+    <div class="col-md-5">
+      {% if youtube_video_url %}
+        <div class="ratio ratio-16x9 mb-2">
+          <iframe width="560" height="315" src="{{ youtube_video_url }}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="text-center text-muted" style="font-size: 0.95em;">Introduction to CyPhy Life</div>
+      {% endif %}
+    </div>
+  </div>
 </main>
 {% endblock %} 

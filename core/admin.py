@@ -10,11 +10,13 @@ from .models import (
 @admin.register(HomeContent)
 class HomeContentAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
+    fields = ('headline', 'subheadline', 'markdown_content', 'youtube_video_url')
     def has_add_permission(self, request):
         # Only allow one instance of HomeContent
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
+
 @admin.register(LabInfo)
 class LabInfoAdmin(admin.ModelAdmin):
     app_label = 'Content Management'

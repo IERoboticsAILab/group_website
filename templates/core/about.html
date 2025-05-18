@@ -10,13 +10,7 @@
     <div class="col-md-8">
         <h3>Our Mission</h3>
         {% if about_content %}
-            <p>{{ about_content.mission|linebreaks }}</p>
-        {% else %}
-            <p>
-                Our research group is dedicated to advancing knowledge in our field. 
-                We strive to conduct high-quality research that addresses important scientific questions and 
-                contributes to solving real-world problems.
-            </p>
+            <p>{{ about_content.markdown_content|markdown2safe }}</p>
         {% endif %}
         
         <h3 class="mt-4">Research Focus</h3>

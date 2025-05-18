@@ -20,7 +20,8 @@ class BannerImage(models.Model):
 class HomeContent(models.Model):
     headline = models.CharField(max_length=200)
     subheadline = models.TextField()
-    mission_statement = models.TextField()
+    markdown_content = models.TextField(blank=True, help_text="Markdown content for the home page main section")
+    youtube_video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the home page")
     
     class Meta:
         verbose_name = "Home Page Content"
