@@ -20,12 +20,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -45,13 +47,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -71,13 +74,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -97,13 +101,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -120,13 +125,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -143,13 +149,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
@@ -166,13 +173,14 @@
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.name }}" class="mb-3">
+            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.name }}" class="mb-3">
+            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
             {% endif %}
-            <h4>{{ member.name }}</h4>
-            <p class="text-muted mb-3">{{ member.title }}</p>
-            <p>{{ member.bio }}</p>
+            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
+            {% if member.position %}
+            <p class="text-muted mb-3">{{ member.position }}</p>
+            {% endif %}
             {% if member.email %}
             <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}

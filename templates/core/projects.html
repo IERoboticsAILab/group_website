@@ -20,7 +20,9 @@
         {% for research_line in research_lines %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                {% if research_line.image %}
+                {% if research_line.banner_image %}
+                <img src="{{ research_line.banner_image.url }}" class="card-img-top" alt="{{ research_line.title }}" style="height: 200px; object-fit: cover;">
+                {% elif research_line.image %}
                 <img src="{{ research_line.image.url }}" class="card-img-top" alt="{{ research_line.title }}" style="height: 200px; object-fit: cover;">
                 {% else %}
                 <div class="bg-light text-center p-5">
@@ -50,7 +52,9 @@
     {% for project in projects %}
     <div class="col-md-4 mb-4 project-item">
         <div class="card h-100">
-            {% if project.image %}
+            {% if project.banner_image %}
+            <img src="{{ project.banner_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+            {% elif project.image %}
             <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
             {% else %}
             <div class="bg-light text-center p-5">
@@ -60,6 +64,13 @@
             <div class="card-body">
                 <h5 class="card-title">{{ project.title }}</h5>
                 <p class="card-text">{{ project.description|truncatewords:30 }}</p>
+                {% if project.research_lines_set.all %}
+                <p><small class="text-muted">Part of: 
+                    {% for line in project.research_lines_set.all %}
+                    <a href="{{ line.get_absolute_url }}">{{ line.title }}</a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </small></p>
+                {% endif %}
                 <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary stretched-link">Learn More</a>
             </div>
         </div>
@@ -79,21 +90,23 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const areaFilter = document.getElementById('project-area-filter');
-    const projectItems = document.querySelectorAll('.project-item');
-    
-    areaFilter.addEventListener('change', function() {
-        const selectedArea = this.value;
+    if (areaFilter) {
+        const projectItems = document.querySelectorAll('.project-item');
         
-        projectItems.forEach(item => {
-            const itemArea = item.getAttribute('data-area');
+        areaFilter.addEventListener('change', function() {
+            const selectedArea = this.value;
             
-            if (selectedArea === 'all' || selectedArea === itemArea) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
+            projectItems.forEach(item => {
+                const itemArea = item.getAttribute('data-area');
+                
+                if (selectedArea === 'all' || selectedArea === itemArea) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
-    });
+    }
 });
 </script>
 {% endblock %} 

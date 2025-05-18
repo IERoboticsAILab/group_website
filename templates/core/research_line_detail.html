@@ -3,6 +3,56 @@
 
 {% block title %}Research Group - {{ research_line.title }}{% endblock %}
 
+{% block extra_css %}
+<style>
+    .research-banner {
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+    
+    .banner-overlay {
+        background: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .banner-content {
+        color: white;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .gallery-img {
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+    
+    .team-member-card {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .team-member-card img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
@@ -16,16 +66,142 @@
         </div>
     </div>
 
+    <!-- Banner Image -->
+    {% if research_line.banner_image %}
+    <div class="research-banner" style="background-image: url('{{ research_line.banner_image.url }}');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <h1 class="display-4">{{ research_line.title }}</h1>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="row mb-5">
         <div class="col-md-8">
             <h1 class="mb-4">{{ research_line.title }}</h1>
             <div class="mb-4">
                 {{ research_line.description|linebreaks }}
             </div>
+            
+            <!-- Gallery Images -->
+            {% if research_line.gallery_images.all %}
+            <h3 class="mt-5 mb-3">Gallery</h3>
+            <div class="row">
+                {% for img in research_line.gallery_images.all %}
+                <div class="col-md-4">
+                    <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                    {% if img.caption %}
+                    <p class="small text-muted">{{ img.caption }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% if research_line.image %}
         <div class="col-md-4">
             <img src="{{ research_line.image.url }}" class="img-fluid rounded" alt="{{ research_line.title }}">
+            
+            <!-- Team Members -->
+            {% if research_line.team_members.all %}
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Team Members</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for member in research_line.team_members.all %}
+                        <div class="col-6 team-member-card">
+                            {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% else %}
+                            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% endif %}
+                            <p class="mb-0"><strong>{{ member.first_name }} {{ member.last_name }}</strong></p>
+                            {% if member.position %}
+                            <p class="small text-muted">{{ member.position }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Publications -->
+            {% if research_line.publications.all %}
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Related Publications</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for pub in research_line.publications.all %}
+                        <li class="list-group-item">
+                            <p class="mb-1"><strong>{{ pub.title }}</strong></p>
+                            <p class="small mb-0">{{ pub.authors }}</p>
+                            <p class="small text-muted">{{ pub.venue }}, {{ pub.year }}</p>
+                            {% if pub.link %}
+                            <a href="{{ pub.link }}" target="_blank" class="small">View Publication</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="col-md-4">
+            <!-- Team Members -->
+            {% if research_line.team_members.all %}
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Team Members</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for member in research_line.team_members.all %}
+                        <div class="col-6 team-member-card">
+                            {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% else %}
+                            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% endif %}
+                            <p class="mb-0"><strong>{{ member.first_name }} {{ member.last_name }}</strong></p>
+                            {% if member.position %}
+                            <p class="small text-muted">{{ member.position }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Publications -->
+            {% if research_line.publications.all %}
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Related Publications</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for pub in research_line.publications.all %}
+                        <li class="list-group-item">
+                            <p class="mb-1"><strong>{{ pub.title }}</strong></p>
+                            <p class="small mb-0">{{ pub.authors }}</p>
+                            <p class="small text-muted">{{ pub.venue }}, {{ pub.year }}</p>
+                            {% if pub.link %}
+                            <a href="{{ pub.link }}" target="_blank" class="small">View Publication</a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
         </div>
         {% endif %}
     </div>
@@ -37,7 +213,9 @@
         {% for project in research_line.projects.all %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                {% if project.image %}
+                {% if project.banner_image %}
+                <img src="{{ project.banner_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
+                {% elif project.image %}
                 <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
                 {% else %}
                 <div class="bg-light text-center p-5">

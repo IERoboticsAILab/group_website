@@ -14,23 +14,10 @@ def home(request):
     except HomeContent.DoesNotExist:
         home_content = None
     
-    # Get featured research projects
-    featured_projects = ResearchProject.objects.filter(featured=True)[:3]
-    
-    # Get active team members
-    team_members = TeamMember.objects.filter(active=True)[:3]
-    
-    # Get highlighted publications
-    highlighted_pubs = Publication.objects.filter(highlighted=True)[:3]
-    
-    # Get active banner images
     banner_images = BannerImage.objects.filter(active=True)
     
     context = {
         'home_content': home_content,
-        'featured_projects': featured_projects,
-        'featured_members': team_members,
-        'highlighted_publications': highlighted_pubs,
         'banner_images': banner_images,
         'markdown_content': home_content.markdown_content if home_content else '',
         'youtube_video_url': home_content.youtube_video_url if home_content else '',
@@ -41,15 +28,13 @@ def home(request):
 
 def people(request):
     # Get active team members by role
-    pis = TeamMember.objects.filter(active=True, role='PI')
-    postdocs = TeamMember.objects.filter(active=True, role='POSTDOC')
-    phd_students = TeamMember.objects.filter(active=True, role='PHD')
-    masters = TeamMember.objects.filter(active=True, role='MS')
-    undergrads = TeamMember.objects.filter(active=True, role='UNDERGRAD')
-    staff = TeamMember.objects.filter(active=True, role='STAFF')
-    
-    # Alumni
-    alumni = TeamMember.objects.filter(active=False) | TeamMember.objects.filter(role='ALUMNI')
+    pis = TeamMember.objects.filter( role='PI')
+    postdocs = TeamMember.objects.filter(role='POSTDOC')
+    phd_students = TeamMember.objects.filter(role='PHD')
+    masters = TeamMember.objects.filter(role='MS')
+    undergrads = TeamMember.objects.filter(role='UNDERGRAD')
+    staff = TeamMember.objects.filter(role='STAFF')
+    alumni = TeamMember.objects.filter(alum=True)
     
     context = {
         'pis': pis,

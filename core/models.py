@@ -41,6 +41,7 @@ class ResearchLine(models.Model):
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='research_lines')
     publications = models.ManyToManyField('Publication', blank=True, related_name='research_lines')
+    projects = models.ManyToManyField('ResearchProject', blank=True, related_name='research_lines_set')
     
     class Meta:
         ordering = ['order']
@@ -75,9 +76,11 @@ class ResearchLineGalleryImage(models.Model):
 class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
+    banner_image = models.ImageField(upload_to='projects/banners/', blank=True, null=True, help_text="Banner image for the project")
     image = models.ImageField(upload_to='projects/', blank=True, null=True)
     featured = models.BooleanField(default=False)
-    research_line = models.ForeignKey(ResearchLine, on_delete=models.SET_NULL, null=True, blank=True, related_name='projects')
+    team_members = models.ManyToManyField('TeamMember', blank=True, related_name='projects')
+    publications = models.ManyToManyField('Publication', blank=True, related_name='projects')
     order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     content = models.TextField(blank=True, help_text="Detailed content for project detail page")
@@ -97,6 +100,20 @@ class ResearchProject(models.Model):
     
     def get_absolute_url(self):
         return reverse('project_detail', kwargs={'slug': self.slug})
+
+class ProjectGalleryImage(models.Model):
+    project = models.ForeignKey(ResearchProject, on_delete=models.CASCADE, related_name='gallery_images')
+    image = models.ImageField(upload_to='projects/gallery/')
+    caption = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Project Gallery Image"
+        verbose_name_plural = "Project Gallery Images"
+        
+    def __str__(self):
+        return f"Image for {self.project.title}"
 
 class TeamMember(models.Model):
     ROLE_CHOICES = [

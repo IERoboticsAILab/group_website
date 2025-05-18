@@ -3,7 +3,8 @@ from django.utils.html import format_html
 from .models import (
     HomeContent, ResearchProject, TeamMember, 
     Publication, LabInfo,
-    BannerImage, ResearchLine, SocialMedia
+    BannerImage, ResearchLine, SocialMedia,
+    ResearchLineGalleryImage, ProjectGalleryImage
 )
 
 # Content Management
@@ -28,16 +29,32 @@ class LabInfoAdmin(admin.ModelAdmin):
 
 # Research
 
+class ResearchLineGalleryImageInline(admin.TabularInline):
+    model = ResearchLineGalleryImage
+    extra = 1
+    fields = ('image', 'caption', 'order')
+
+class ProjectGalleryImageInline(admin.TabularInline):
+    model = ProjectGalleryImage
+    extra = 1
+    fields = ('image', 'caption', 'order')
+
 @admin.register(ResearchProject)
 class ResearchProjectAdmin(admin.ModelAdmin):
     app_label = 'Research'
     list_display = ('title', 'featured', 'order')
     list_editable = ('featured', 'order')
+    list_filter = ('featured',)
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description', 'content')
+    filter_horizontal = ('team_members', 'publications')
+    inlines = [ProjectGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'image', )
+            'fields': ('title', 'slug', 'description', 'banner_image', 'image')
+        }),
+        ('Related Content', {
+            'fields': ('team_members', 'publications')
         }),
         ('Display Options', {
             'fields': ('featured', 'order')
@@ -91,9 +108,14 @@ class ResearchLineAdmin(admin.ModelAdmin):
     list_editable = ('order',)
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description')
+    filter_horizontal = ('team_members', 'publications', 'projects')
+    inlines = [ResearchLineGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'image')
+            'fields': ('title', 'slug', 'description', 'banner_image', 'image')
+        }),
+        ('Related Content', {
+            'fields': ('team_members', 'publications', 'projects')
         }),
         ('Display Options', {
             'fields': ('order',)
