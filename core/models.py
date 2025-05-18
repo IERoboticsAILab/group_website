@@ -152,6 +152,7 @@ class Publication(models.Model):
     pdflink = models.URLField(blank=True)
     abstract = models.TextField(blank=True)
     date = models.DateField(blank=True, null=True)
+    image = models.ImageField(upload_to='publications/', blank=True, null=True)
     
     class Meta:
         ordering = ['-date', 'title']

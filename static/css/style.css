@@ -81,3 +81,7 @@ footer {
 .border-primary {
     border-left: 4px solid #007bff !important;
 } 
+
+.secondary-section {
+    background-color: #231F20;
+}
