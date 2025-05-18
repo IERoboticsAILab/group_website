@@ -15,13 +15,11 @@ class HomeContentAdmin(admin.ModelAdmin):
     fields = ('headline', 'subheadline', 'about_markdown_content', 'youtube_video_url', 'section_markdown_content', 'section_image')
     
     def has_add_permission(self, request):
-        # Only allow one instance of HomeContent
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
     
     def changelist_view(self, request, extra_context=None):
-        # If a HomeContent instance exists, redirect to its change page
         if self.model.objects.exists():
             obj = self.model.objects.first()
             return redirect('admin:core_homecontent_change', obj.id)
@@ -32,13 +30,11 @@ class LabInfoAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
     
     def has_add_permission(self, request):
-        # Only allow one instance of LabInfo
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
     
     def changelist_view(self, request, extra_context=None):
-        # If a LabInfo instance exists, redirect to its change page
         if self.model.objects.exists():
             obj = self.model.objects.first()
             return redirect('admin:core_labinfo_change', obj.id)
