@@ -4,78 +4,100 @@
 {% block title %}Research Group - Projects{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Research Lines and Projects</h1>
+<h1 class="mb-5">Projects</h1>
 
-<!-- Research Lines Section -->
-<div class="mb-5">
-    <div class="row">
-        {% for research_line in research_lines %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
+<!-- Combined Projects and Research Lines Grid -->
+<div class="row g-4">
+    <!-- Research Lines First -->
+    {% for research_line in research_lines %}
+    <div class="col-md-3 mb-4">
+        <div class="project-card border rounded-4 h-100">
+            <div class="project-image">
                 {% if research_line.banner_image %}
-                <img src="{{ research_line.banner_image.url }}" class="card-img-top" alt="{{ research_line.title }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ research_line.banner_image.url }}" alt="{{ research_line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                 {% elif research_line.image %}
-                <img src="{{ research_line.image.url }}" class="card-img-top" alt="{{ research_line.title }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ research_line.image.url }}" alt="{{ research_line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                 {% else %}
-                <div class="bg-light text-center p-5">
-                    <i class="bi bi-diagram-3" style="font-size: 3rem;"></i>
+                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
+                    <i class="bi bi-diagram-3 pt-5" style="font-size: 3rem;"></i>
                 </div>
                 {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ research_line.title }}</h5>
-                    <p class="card-text">{{ research_line.description|truncatewords:30 }}</p>
-                    <a href="{{ research_line.get_absolute_url }}" class="btn btn-primary stretched-link">View Research Line</a>
-                </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12">
-            <div class="alert alert-info">
-                No research lines available at the moment.
+            <div class="p-3 d-flex flex-column">
+                <h5 class="fw-bold mb-2">{{ research_line.title }}</h5>
+                <p class="text-muted mb-0">Research Line</p>
             </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-
-<!-- Projects Grid -->
-<div class="row" id="projects-container">
-    {% for project in projects %}
-    <div class="col-md-4 mb-4 project-item">
-        <div class="card h-100">
-            {% if project.banner_image %}
-            <img src="{{ project.banner_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
-            {% elif project.image %}
-            <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 200px; object-fit: cover;">
-            {% else %}
-            <div class="bg-light text-center p-5">
-                <i class="bi bi-diagram-project" style="font-size: 3rem;"></i>
-            </div>
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description|truncatewords:30 }}</p>
-                {% if project.research_lines_set.all %}
-                <p><small class="text-muted">Part of: 
-                    {% for line in project.research_lines_set.all %}
-                    <a href="{{ line.get_absolute_url }}">{{ line.title }}</a>{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </small></p>
-                {% endif %}
-                <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary stretched-link">Learn More</a>
-            </div>
-        </div>
-    </div>
-    {% empty %}
-    <div class="col-12">
-        <div class="alert alert-info">
-            No projects available at the moment. Please check back later.
+            <a href="{{ research_line.get_absolute_url }}" class="stretched-link"></a>
         </div>
     </div>
     {% endfor %}
+    
+    <!-- Projects Next -->
+    {% for project in projects %}
+    <div class="col-md-3 mb-4 project-item">
+        <div class="project-card border rounded-4 h-100">
+            <div class="project-image">
+                {% if project.banner_image %}
+                <img src="{{ project.banner_image.url }}" alt="{{ project.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                {% elif project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
+                    <i class="bi bi-diagram-project pt-5" style="font-size: 3rem;"></i>
+                </div>
+                {% endif %}
+            </div>
+            <div class="p-3 d-flex flex-column">
+                <h5 class="fw-bold mb-2">{{ project.title }}</h5>
+                <p class="text-muted mb-0">Research Project</p>
+            </div>
+            <a href="{% url 'project_detail' project.slug %}" class="stretched-link"></a>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% if not projects and not research_lines %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            No projects or research lines available at the moment.
+        </div>
+    </div>
+    {% endif %}
 </div>
 
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .project-card {
+        position: relative;
+        transition: all 0.2s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    }
+    
+    .stretched-link {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+    }
+    
+    .rounded-top-4 {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+</style>
 {% endblock %}
 
 {% block extra_js %}
