@@ -1,6 +1,6 @@
 /* Main Styles */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Helvetica Light", Inter, Helvetica, sans-serif;
     color: #333;
     line-height: 1.6;
     min-height: 100vh;
@@ -52,12 +52,6 @@ main {
 }
 
 /* Publications */
-.publication {
-    padding: 1rem;
-    border-left: 4px solid #007bff;
-    background-color: #f8f9fa;
-    margin-bottom: 1.5rem;
-}
 
 .publication .authors {
     font-style: italic;

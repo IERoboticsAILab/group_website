@@ -6,56 +6,60 @@
 {% block content %}
 <h1 class="mb-4">Publications</h1>
 
-<div class="mb-4">
-    <p>
-        Our research group has published numerous papers in leading journals and conferences.
-        Below is a list of our recent publications.
-    </p>
-</div>
-
-<!-- Filter by year -->
-<div class="mb-4">
-    <label for="publication-year-filter" class="form-label">Filter by Year:</label>
-    <select id="publication-year-filter" class="form-select w-auto">
-        <option value="all" selected>All Years</option>
-        {% for year in publication_years %}
-        <option value="{{ year|date:'Y' }}">{{ year|date:'Y' }}</option>
-        {% endfor %}
-    </select>
+<div class="row mb-4">
+    <div class="col-md-9">
+        <div class="position-relative">
+            <input type="text" id="publication-search" class="form-control" placeholder="Search publications by title or content...">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <select id="publication-year-filter" class="form-select">
+            <option value="all" selected>All Years</option>
+            {% for year in publication_years %}
+            <option value="{{ year|date:'Y' }}">{{ year|date:'Y' }}</option>
+            {% endfor %}
+        </select>
+    </div>
 </div>
 
 <!-- Publications List -->
 <div class="publications-list">
     {% for pub in publications %}
-    <div class="publication row mb-4" data-year="{{ pub.date|date:'Y' }}">
-        {% if pub.image %}
-        <div class="col-md-3 mb-3 mb-md-0">
-            <img src="{{ pub.image.url }}" alt="{{ pub.title }}" class="img-fluid rounded">
-        </div>
-        {% endif %}
-        <div class="{% if pub.image %}col-md-9{% else %}col-md-12{% endif %}">
-            <h4>{{ pub.title }}</h4>
-            <p class="authors">{{ pub.authors }}</p>
-            <p class="date">{{ pub.date|date:"F Y" }}</p>
-            {% if pub.abstract %}
-            <div class="abstract-toggle mb-2">
-                <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#abstract-{{ forloop.counter }}" role="button">
-                    Show Abstract
-                </a>
-                <div class="collapse mt-2" id="abstract-{{ forloop.counter }}">
-                    <div class="card card-body">
+    <div class="publication mb-5 pb-4 border-bottom" data-year="{{ pub.date|date:'Y' }}">
+        <div class="row">
+            {% if pub.image %}
+            <div class="col-md-3 mb-3 mb-md-0">
+                <img src="{{ pub.image.url }}" alt="{{ pub.title }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+            <div class="{% if pub.image %}col-md-9{% else %}col-md-12{% endif %}">
+                <div class="mb-2 text-muted">{{ pub.date|date:"m-Y" }}</div>
+                <h4 class="fw-bold">{{ pub.title }}</h4>
+                <p class="authors mb-3">{{ pub.authors }}</p>
+                
+                {% if pub.abstract %}
+                <div class="mb-3">
+                    <div>
+                        <strong>Abstract:</strong>
+                    </div>
+                    <div id="abstract-{{ forloop.counter }}" class="mt-2">
                         {{ pub.abstract }}
                     </div>
                 </div>
-            </div>
-            {% endif %}
-            <div class="publication-links">
-                {% if pub.paperlink %}
-                <a href="{{ pub.paperlink }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">View Publication</a>
                 {% endif %}
-                {% if pub.pdflink %}
-                <a href="{{ pub.pdflink }}" class="btn btn-sm btn-outline-primary" target="_blank">Download PDF</a>
-                {% endif %}
+                
+                <div class="publication-links">
+                    {% if pub.pdflink %}
+                    <a href="{{ pub.pdflink }}" class="me-3" target="_blank">
+                        <i class="bi bi-file-earmark-text me-1"></i> Pre-Print
+                    </a>
+                    {% endif %}
+                    {% if pub.paperlink %}
+                    <a href="{{ pub.paperlink }}" target="_blank">
+                        <i class="bi bi-link-45deg me-1"></i> Publication
+                    </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -69,24 +73,19 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Toggle abstract show/hide text
-        const abstractToggles = document.querySelectorAll('.abstract-toggle a');
-        abstractToggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                if (this.textContent.trim() === 'Show Abstract') {
-                    this.textContent = 'Hide Abstract';
-                } else {
-                    this.textContent = 'Show Abstract';
-                }
-            });
-        });
-        
         // Filter publications by year
         const yearFilter = document.getElementById('publication-year-filter');
+        const publications = document.querySelectorAll('.publication');
+        const publicationCount = document.getElementById('publication-count');
+        
+        function updatePublicationCount() {
+            const visiblePublications = document.querySelectorAll('.publication:not([style*="display: none"])');
+            publicationCount.textContent = visiblePublications.length;
+        }
+        
         if (yearFilter) {
             yearFilter.addEventListener('change', function() {
                 const selectedYear = this.value;
-                const publications = document.querySelectorAll('.publication');
                 
                 publications.forEach(pub => {
                     if (selectedYear === 'all' || pub.dataset.year === selectedYear) {
@@ -95,6 +94,38 @@
                         pub.style.display = 'none';
                     }
                 });
+                
+                updatePublicationCount();
+            });
+        }
+        
+        // Search functionality
+        const searchInput = document.getElementById('publication-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                publications.forEach(pub => {
+                    const title = pub.querySelector('h4').textContent.toLowerCase();
+                    const authors = pub.querySelector('.authors').textContent.toLowerCase();
+                    const abstract = pub.querySelector('[id^="abstract-"]') ? 
+                                     pub.querySelector('[id^="abstract-"]').textContent.toLowerCase() : '';
+                    
+                    if (searchTerm === '' || 
+                        title.includes(searchTerm) || 
+                        authors.includes(searchTerm) || 
+                        abstract.includes(searchTerm)) {
+                        // Also check if it matches the year filter
+                        const currentYearFilter = yearFilter.value;
+                        if (currentYearFilter === 'all' || pub.dataset.year === currentYearFilter) {
+                            pub.style.display = '';
+                        }
+                    } else {
+                        pub.style.display = 'none';
+                    }
+                });
+                
+                updatePublicationCount();
             });
         }
     });
