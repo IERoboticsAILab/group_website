@@ -15,8 +15,10 @@ def home(request):
     
     context = {
         'home_content': home_content,
-        'markdown_content': home_content.markdown_content if home_content else '',
+        'about_markdown_content': home_content.about_markdown_content if home_content else '',
+        'section_markdown_content': home_content.section_markdown_content if home_content else '',
         'youtube_video_url': home_content.youtube_video_url if home_content else '',
+        'section_image': home_content.section_image if home_content else '',
     }
     
     return render(request, 'core/home.html', context)
