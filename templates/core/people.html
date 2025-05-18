@@ -4,14 +4,6 @@
 {% block title %}Research Group - People{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Our Team</h1>
-
-<div class="mb-5">
-    <p>
-        Our research group consists of talented researchers at various career stages, 
-        including faculty, postdoctoral researchers, graduate students, and undergraduate researchers.
-    </p>
-</div>
 
 {% if pis %}
 <h3 class="mb-4">Principal Investigator</h3>
@@ -40,10 +32,10 @@
 </div>
 {% endif %}
 
-{% if postdocs %}
-<h3 class="mb-4">Postdoctoral Researchers</h3>
+{% if people %}
+<h3 class="mb-4">Lab Members</h3>
 <div class="row">
-    {% for member in postdocs %}
+    {% for member in people %}
     <div class="col-md-4 mb-5">
         <div class="team-member">
             {% if member.image %}
@@ -60,105 +52,6 @@
             {% endif %}
             {% if member.personal_website %}
             <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if phd_students %}
-<h3 class="mb-4">PhD Students</h3>
-<div class="row">
-    {% for member in phd_students %}
-    <div class="col-md-4 mb-5">
-        <div class="team-member">
-            {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% endif %}
-            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
-            {% if member.position %}
-            <p class="text-muted mb-3">{{ member.position }}</p>
-            {% endif %}
-            {% if member.email %}
-            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
-            {% endif %}
-            {% if member.personal_website %}
-            <p><a href="{{ member.personal_website }}" target="_blank">Personal Website</a></p>
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if masters %}
-<h3 class="mb-4">Master's Students</h3>
-<div class="row">
-    {% for member in masters %}
-    <div class="col-md-4 mb-5">
-        <div class="team-member">
-            {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% endif %}
-            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
-            {% if member.position %}
-            <p class="text-muted mb-3">{{ member.position }}</p>
-            {% endif %}
-            {% if member.email %}
-            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if undergrads %}
-<h3 class="mb-4">Undergraduate Students</h3>
-<div class="row">
-    {% for member in undergrads %}
-    <div class="col-md-4 mb-5">
-        <div class="team-member">
-            {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% endif %}
-            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
-            {% if member.position %}
-            <p class="text-muted mb-3">{{ member.position }}</p>
-            {% endif %}
-            {% if member.email %}
-            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if staff %}
-<h3 class="mb-4">Staff</h3>
-<div class="row">
-    {% for member in staff %}
-    <div class="col-md-4 mb-5">
-        <div class="team-member">
-            {% if member.image %}
-            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% else %}
-            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="mb-3">
-            {% endif %}
-            <h4>{{ member.first_name }} {{ member.last_name }}</h4>
-            {% if member.position %}
-            <p class="text-muted mb-3">{{ member.position }}</p>
-            {% endif %}
-            {% if member.email %}
-            <p><a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
             {% endif %}
         </div>
     </div>
