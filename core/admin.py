@@ -63,7 +63,7 @@ class ResearchProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'banner_image', 'image')
+            'fields': ('title', 'slug', 'description', 'banner_image', 'video_url')
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications')
@@ -102,7 +102,7 @@ class ResearchLineAdmin(admin.ModelAdmin):
     inlines = [ResearchLineGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'banner_image', 'image')
+            'fields': ('title', 'slug', 'description', 'banner_image', 'video_url')
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications', 'projects')
