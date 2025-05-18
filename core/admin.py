@@ -10,7 +10,7 @@ from .models import (
 @admin.register(HomeContent)
 class HomeContentAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
-    fields = ('headline', 'subheadline', 'markdown_content', 'youtube_video_url')
+    fields = ('headline', 'subheadline', 'markdown_content', 'youtube_video_url', 'section_markdown_content', 'section_image')
     def has_add_permission(self, request):
         # Only allow one instance of HomeContent
         if self.model.objects.exists():
