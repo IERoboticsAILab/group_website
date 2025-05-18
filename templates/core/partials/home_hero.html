@@ -3,46 +3,32 @@
 <div class="banner-container position-relative">
     <div class="banner-carousel">
         <div class="carousel-track">
-            {% if banner_images %}
-                {% for image in banner_images %}
-                    <div class="carousel-slide">
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="banner-image" title="{{ image.description }}">
-                    </div>
-                {% endfor %}
-                <!-- Duplicate slides for seamless infinite scrolling -->
-                {% for image in banner_images %}
-                    <div class="carousel-slide">
-                        <img src="{{ image.image.url }}" alt="{{ image.title }}" class="banner-image" title="{{ image.description }}">
-                    </div>
-                {% endfor %}
-            {% else %}
-                <!-- Fallback images if no banner images are configured -->
-                <div class="carousel-slide">
-                    <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
-                </div>
-                <!-- Duplicate for fallback infinite scrolling -->
-                <div class="carousel-slide">
-                    <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
-                </div>
-                <div class="carousel-slide">
-                    <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
-                </div>
-            {% endif %}
+            <!-- Static images in the banner -->
+            <div class="carousel-slide">
+                <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
+            </div>
+            <!-- Duplicate for fallback infinite scrolling -->
+            <div class="carousel-slide">
+                <img src="{% static 'images/GAME.gif' %}" alt="Research image 1" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/iTrash.gif' %}" alt="Research image 2" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/ROBOPRENEUR.gif' %}" alt="Research image 3" class="banner-image">
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'images/SPICE.gif' %}" alt="Research image 4" class="banner-image">
+            </div>
         </div>
     </div>
     <div class="banner-overlay"></div>

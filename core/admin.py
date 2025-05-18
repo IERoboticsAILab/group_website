@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.shortcuts import redirect
 from .models import (
     HomeContent, ResearchProject, TeamMember, 
     Publication, LabInfo,
-    BannerImage, ResearchLine, SocialMedia,
+    ResearchLine, SocialMedia,
     ResearchLineGalleryImage, ProjectGalleryImage
 )
 
@@ -11,21 +12,37 @@ from .models import (
 @admin.register(HomeContent)
 class HomeContentAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
-    fields = ('headline', 'subheadline', 'markdown_content', 'youtube_video_url', 'section_markdown_content', 'section_image')
+    fields = ('headline', 'subheadline', 'about_markdown_content', 'youtube_video_url', 'section_markdown_content', 'section_image')
+    
     def has_add_permission(self, request):
         # Only allow one instance of HomeContent
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
+    
+    def changelist_view(self, request, extra_context=None):
+        # If a HomeContent instance exists, redirect to its change page
+        if self.model.objects.exists():
+            obj = self.model.objects.first()
+            return redirect('admin:core_homecontent_change', obj.id)
+        return super().changelist_view(request, extra_context)
 
 @admin.register(LabInfo)
 class LabInfoAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
+    
     def has_add_permission(self, request):
         # Only allow one instance of LabInfo
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
+    
+    def changelist_view(self, request, extra_context=None):
+        # If a LabInfo instance exists, redirect to its change page
+        if self.model.objects.exists():
+            obj = self.model.objects.first()
+            return redirect('admin:core_labinfo_change', obj.id)
+        return super().changelist_view(request, extra_context)
 
 # Research
 
@@ -42,9 +59,8 @@ class ProjectGalleryImageInline(admin.TabularInline):
 @admin.register(ResearchProject)
 class ResearchProjectAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'featured', 'order')
-    list_editable = ('featured', 'order')
-    list_filter = ('featured',)
+    list_display = ('title', 'date')
+    list_filter = ()
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description', 'content')
     filter_horizontal = ('team_members', 'publications')
@@ -55,9 +71,6 @@ class ResearchProjectAdmin(admin.ModelAdmin):
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications')
-        }),
-        ('Display Options', {
-            'fields': ('featured', 'order')
         }),
         ('Detailed Content', {
             'fields': ('content',),
@@ -76,34 +89,17 @@ class PublicationAdmin(admin.ModelAdmin):
 @admin.register(TeamMember)
 class TeamMemberAdmin(admin.ModelAdmin):
     app_label = 'Team'
-    list_display = ('first_name', 'last_name', 'role', 'email', 'alum')
-    list_filter = ('role', 'alum')
-    list_editable = ('alum',)
+    list_display = ('first_name', 'last_name', 'email')
+    list_filter = ()
     search_fields = ('first_name', 'last_name', 'email')
 
 
 # Media & Display
-@admin.register(BannerImage)
-class BannerImageAdmin(admin.ModelAdmin):
-    app_label = 'Media & Display'
-    list_display = ('title', 'image_preview', 'order', 'active')
-    list_editable = ('order', 'active')
-    search_fields = ('title', 'description')
-    list_filter = ('active',)
-    
-    def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" style="max-height: 50px; max-width: 100px;" />', obj.image.url)
-        return "No Image"
-    
-    image_preview.short_description = 'Preview'
-
 @admin.register(ResearchLine)
 class ResearchLineAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'order')
+    list_display = ('title', 'date')
     list_filter = ()
-    list_editable = ('order',)
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description')
     filter_horizontal = ('team_members', 'publications', 'projects')
@@ -115,17 +111,22 @@ class ResearchLineAdmin(admin.ModelAdmin):
         ('Related Content', {
             'fields': ('team_members', 'publications', 'projects')
         }),
-        ('Display Options', {
-            'fields': ('order',)
-        }),
     )
 
 @admin.register(SocialMedia)
 class SocialMediaAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
+    
     def has_add_permission(self, request):
         # Only allow one instance of SocialMedia
         if self.model.objects.exists():
             return False
         return super().has_add_permission(request)
+    
+    def changelist_view(self, request, extra_context=None):
+        # If a SocialMedia instance exists, redirect to its change page
+        if self.model.objects.exists():
+            obj = self.model.objects.first()
+            return redirect('admin:core_socialmedia_change', obj.id)
+        return super().changelist_view(request, extra_context)
 

@@ -1,29 +1,15 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
-
-class BannerImage(models.Model):
-    title = models.CharField(max_length=100, help_text="Image title for administrative purposes")
-    image = models.ImageField(upload_to='banner/', help_text="Image will be resized to fit banner height")
-    description = models.CharField(max_length=200, blank=True, help_text="Optional brief description of the image")
-    order = models.PositiveIntegerField(default=0, help_text="Order in which the image will be displayed")
-    active = models.BooleanField(default=True, help_text="Whether this image is displayed in the banner")
-    
-    class Meta:
-        ordering = ['order']
-        verbose_name = "Banner Image"
-        verbose_name_plural = "Banner Images"
-    
-    def __str__(self):
-        return self.title
+from filer.fields.image import FilerImageField
 
 class HomeContent(models.Model):
     headline = models.CharField(max_length=200)
     subheadline = models.CharField(max_length=200)
-    markdown_content = models.TextField(blank=True, help_text="Markdown content for the home page main section")
+    about_markdown_content = models.TextField(blank=True, help_text="Markdown content for the home page main section")
     youtube_video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the home page")
     section_markdown_content = models.TextField(blank=True, help_text="Markdown content for the second home page section")
-    section_image = models.ImageField(upload_to='home_sections/', blank=True, null=True, help_text="Image for the second home page section")
+    section_image = FilerImageField(null=True, blank=True, related_name="home_section_images", on_delete=models.SET_NULL, help_text="Image for the second home page section")
     
     class Meta:
         verbose_name = "Home Page Content"
@@ -34,17 +20,17 @@ class HomeContent(models.Model):
 
 class ResearchLine(models.Model):
     title = models.CharField(max_length=200)
+    date = models.DateField(auto_now_add=True)
     description = models.TextField()
-    banner_image = models.ImageField(upload_to='research_lines/banners/', blank=True, null=True, help_text="Banner image for the research line")
-    image = models.ImageField(upload_to='research_lines/', blank=True, null=True)
-    order = models.PositiveIntegerField(default=0)
+    banner_image = FilerImageField(null=True, blank=True, related_name="research_line_banners", on_delete=models.SET_NULL, help_text="Banner image for the research line")
+    image = FilerImageField(null=True, blank=True, related_name="research_line_images", on_delete=models.SET_NULL)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='research_lines')
     publications = models.ManyToManyField('Publication', blank=True, related_name='research_lines')
     projects = models.ManyToManyField('ResearchProject', blank=True, related_name='research_lines_set')
     
     class Meta:
-        ordering = ['order']
+        ordering = ['-date']
         verbose_name = "Research Line"
         verbose_name_plural = "Research Lines"
     
@@ -61,7 +47,7 @@ class ResearchLine(models.Model):
 
 class ResearchLineGalleryImage(models.Model):
     research_line = models.ForeignKey(ResearchLine, on_delete=models.CASCADE, related_name='gallery_images')
-    image = models.ImageField(upload_to='research_lines/gallery/')
+    image = FilerImageField(null=True, blank=True, related_name="research_line_gallery", on_delete=models.SET_NULL)
     caption = models.CharField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0)
     
@@ -75,18 +61,17 @@ class ResearchLineGalleryImage(models.Model):
 
 class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
+    date = models.DateField(auto_now_add=True)
     description = models.TextField()
-    banner_image = models.ImageField(upload_to='projects/banners/', blank=True, null=True, help_text="Banner image for the project")
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
-    featured = models.BooleanField(default=False)
+    banner_image = FilerImageField(null=True, blank=True, related_name="project_banners", on_delete=models.SET_NULL, help_text="Banner image for the project")
+    image = FilerImageField(null=True, blank=True, related_name="project_images", on_delete=models.SET_NULL)
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='projects')
     publications = models.ManyToManyField('Publication', blank=True, related_name='projects')
-    order = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=250, unique=True, blank=True)
     content = models.TextField(blank=True, help_text="Detailed content for project detail page")
     
     class Meta:
-        ordering = ['order']
+        ordering = ['-date']
         verbose_name = "Research Project"
         verbose_name_plural = "Research Projects"
     
@@ -103,7 +88,7 @@ class ResearchProject(models.Model):
 
 class ProjectGalleryImage(models.Model):
     project = models.ForeignKey(ResearchProject, on_delete=models.CASCADE, related_name='gallery_images')
-    image = models.ImageField(upload_to='projects/gallery/')
+    image = FilerImageField(null=True, blank=True, related_name="project_gallery", on_delete=models.SET_NULL)
     caption = models.CharField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0)
     
@@ -116,25 +101,15 @@ class ProjectGalleryImage(models.Model):
         return f"Image for {self.project.title}"
 
 class TeamMember(models.Model):
-    ROLE_CHOICES = [
-        ('PI', 'Principal Investigator'),
-        ('POSTDOC', 'Postdoctoral Researcher'),
-        ('PHD', 'PhD Student'),
-        ('MS', 'Master Student'),
-        ('UNDERGRAD', 'Undergraduate Student'),
-        ('STAFF', 'Staff'),
-        ('ALUMNI', 'Alumni'),
-    ]
-    
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     position = models.CharField(max_length=200, blank=True)
     email = models.EmailField(blank=True)
     github = models.URLField(blank=True)
     linkedin = models.URLField(blank=True)
     personal_website = models.URLField(blank=True)
-    image = models.ImageField(upload_to='members/', blank=True, null=True)
+    image = FilerImageField(null=True, blank=True, related_name="member_images", on_delete=models.SET_NULL)
+    principal_investigator = models.BooleanField(default=False)
     alum = models.BooleanField(default=False)
     
     class Meta:
@@ -152,7 +127,7 @@ class Publication(models.Model):
     pdflink = models.URLField(blank=True)
     abstract = models.TextField(blank=True)
     date = models.DateField(blank=True, null=True)
-    image = models.ImageField(upload_to='publications/', blank=True, null=True)
+    image = FilerImageField(null=True, blank=True, related_name="publication_images", on_delete=models.SET_NULL)
     
     class Meta:
         ordering = ['-date', 'title']

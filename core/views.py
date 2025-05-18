@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import (
     HomeContent, ResearchProject, TeamMember,
-    Publication, LabInfo,
-    BannerImage, ResearchLine
+    Publication, LabInfo, ResearchLine
 )
 
 # Create your views here.
@@ -14,11 +13,8 @@ def home(request):
     except HomeContent.DoesNotExist:
         home_content = None
     
-    banner_images = BannerImage.objects.filter(active=True)
-    
     context = {
         'home_content': home_content,
-        'banner_images': banner_images,
         'markdown_content': home_content.markdown_content if home_content else '',
         'youtube_video_url': home_content.youtube_video_url if home_content else '',
     }
@@ -28,21 +24,13 @@ def home(request):
 
 def people(request):
     # Get active team members by role
-    pis = TeamMember.objects.filter( role='PI')
-    postdocs = TeamMember.objects.filter(role='POSTDOC')
-    phd_students = TeamMember.objects.filter(role='PHD')
-    masters = TeamMember.objects.filter(role='MS')
-    undergrads = TeamMember.objects.filter(role='UNDERGRAD')
-    staff = TeamMember.objects.filter(role='STAFF')
+    pis = TeamMember.objects.filter(principal_investigator=True)
+    people = TeamMember.objects.filter(principal_investigator=False)
     alumni = TeamMember.objects.filter(alum=True)
     
     context = {
         'pis': pis,
-        'postdocs': postdocs,
-        'phd_students': phd_students,
-        'masters': masters,
-        'undergrads': undergrads,
-        'staff': staff,
+        'people': people,
         'alumni': alumni,
     }
     
