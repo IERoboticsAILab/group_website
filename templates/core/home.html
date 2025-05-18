@@ -6,6 +6,32 @@
 
 {% block extra_css %}
 <link href="{% static 'css/banner.css' %}" rel="stylesheet">
+<style>
+  .projects-section {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+  }
+  .project-card {
+    height: 100%;
+    transition: transform 0.3s;
+  }
+  .project-card:hover {
+    transform: translateY(-5px);
+  }
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 5%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .project-image {
+    height: 250px;
+    object-fit: cover;
+  }
+</style>
 {% endblock %}
 
 {% block content_full_width %}
@@ -33,6 +59,60 @@
   </div>
 </main>
 
+
+<!-- Projects Carousel Section -->
+{% if projects %}
+<section class="projects-section">
+  <div class="container">
+    <h2 class="mb-4">Projects</h2>
+    <div id="projectsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for project_group in projects %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="row">
+              {% for project in project_group %}
+                {% if project %}
+                <div class="col-md-4 mb-3">
+                  <div class="card project-card">
+                    {% if project.banner_image %}
+                      <img src="{{ project.banner_image.url }}" class="card-img-top project-image" alt="{{ project.title }}">
+                    {% else %}
+                      <div class="bg-light text-center p-5">
+                        <i class="bi bi-diagram-project" style="font-size: 3rem;"></i>
+                      </div>
+                    {% endif %}
+                    <div class="card-body">
+                      <h3 class="card-title h5">{{ project.title }}</h3>
+                      <p class="card-text small">
+                        {% if project.research_lines_set.first %}
+                          {{ project.research_lines_set.first.title }}
+                        {% else %}
+                          Research Project
+                        {% endif %}
+                      </p>
+                      <a href="{% url 'project_detail' project.slug %}" class="stretched-link"></a>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#projectsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#projectsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <main class="container secondary-section text-light">
   <div class="row align-items-start">
     <div class="col-md-7">
@@ -50,6 +130,6 @@
     </div>
 
   </div>
-
 </main>
+
 {% endblock %} 

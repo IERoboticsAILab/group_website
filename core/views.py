@@ -3,6 +3,8 @@ from .models import (
     HomeContent, ResearchProject, TeamMember,
     Publication, LabInfo, ResearchLine
 )
+from django.db.models import Prefetch
+from itertools import zip_longest
 
 # Create your views here.
 
@@ -13,12 +15,23 @@ def home(request):
     except HomeContent.DoesNotExist:
         home_content = None
     
+    # Get featured projects for the carousel
+    featured_projects = list(ResearchProject.objects.all().prefetch_related('research_lines_set')[:6])
+    
+    # Group projects into rows of 3 for carousel
+    def grouper(iterable, n):
+        args = [iter(iterable)] * n
+        return zip_longest(*args)
+    
+    projects_grouped = list(grouper(featured_projects, 3)) if featured_projects else []
+    
     context = {
         'home_content': home_content,
         'about_markdown_content': home_content.about_markdown_content if home_content else '',
         'section_markdown_content': home_content.section_markdown_content if home_content else '',
         'youtube_video_url': home_content.youtube_video_url if home_content else '',
         'section_image': home_content.section_image if home_content else '',
+        'projects': projects_grouped,
     }
     
     return render(request, 'core/home.html', context)
