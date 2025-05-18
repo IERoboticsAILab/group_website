@@ -128,17 +128,6 @@ class Publication(models.Model):
     def __str__(self):
         return self.title
 
-class AboutContent(models.Model):
-    mission = models.TextField()
-    history = models.TextField()
-    
-    class Meta:
-        verbose_name = "About Page Content"
-        verbose_name_plural = "About Page Content"
-    
-    def __str__(self):
-        return "About Page Content"
-
 class LabInfo(models.Model):
     department = models.CharField(max_length=200)
     building = models.CharField(max_length=200)
