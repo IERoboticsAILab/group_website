@@ -27,29 +27,36 @@
 <!-- Publications List -->
 <div class="publications-list">
     {% for pub in publications %}
-    <div class="publication" data-year="{{ pub.date|date:'Y' }}">
-        <h4>{{ pub.title }}</h4>
-        <p class="authors">{{ pub.authors }}</p>
-        <p class="date">{{ pub.date|date:"F Y" }}</p>
-        {% if pub.abstract %}
-        <div class="abstract-toggle mb-2">
-            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#abstract-{{ forloop.counter }}" role="button">
-                Show Abstract
-            </a>
-            <div class="collapse mt-2" id="abstract-{{ forloop.counter }}">
-                <div class="card card-body">
-                    {{ pub.abstract }}
-                </div>
-            </div>
+    <div class="publication row mb-4" data-year="{{ pub.date|date:'Y' }}">
+        {% if pub.image %}
+        <div class="col-md-3 mb-3 mb-md-0">
+            <img src="{{ pub.image.url }}" alt="{{ pub.title }}" class="img-fluid rounded">
         </div>
         {% endif %}
-        <div class="publication-links">
-            {% if pub.paperlink %}
-            <a href="{{ pub.paperlink }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">View Publication</a>
+        <div class="{% if pub.image %}col-md-9{% else %}col-md-12{% endif %}">
+            <h4>{{ pub.title }}</h4>
+            <p class="authors">{{ pub.authors }}</p>
+            <p class="date">{{ pub.date|date:"F Y" }}</p>
+            {% if pub.abstract %}
+            <div class="abstract-toggle mb-2">
+                <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#abstract-{{ forloop.counter }}" role="button">
+                    Show Abstract
+                </a>
+                <div class="collapse mt-2" id="abstract-{{ forloop.counter }}">
+                    <div class="card card-body">
+                        {{ pub.abstract }}
+                    </div>
+                </div>
+            </div>
             {% endif %}
-            {% if pub.pdflink %}
-            <a href="{{ pub.pdflink }}" class="btn btn-sm btn-outline-primary" target="_blank">Download PDF</a>
-            {% endif %}
+            <div class="publication-links">
+                {% if pub.paperlink %}
+                <a href="{{ pub.paperlink }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">View Publication</a>
+                {% endif %}
+                {% if pub.pdflink %}
+                <a href="{{ pub.pdflink }}" class="btn btn-sm btn-outline-primary" target="_blank">Download PDF</a>
+                {% endif %}
+            </div>
         </div>
     </div>
     {% empty %}
@@ -73,6 +80,23 @@
                 }
             });
         });
+        
+        // Filter publications by year
+        const yearFilter = document.getElementById('publication-year-filter');
+        if (yearFilter) {
+            yearFilter.addEventListener('change', function() {
+                const selectedYear = this.value;
+                const publications = document.querySelectorAll('.publication');
+                
+                publications.forEach(pub => {
+                    if (selectedYear === 'all' || pub.dataset.year === selectedYear) {
+                        pub.style.display = '';
+                    } else {
+                        pub.style.display = 'none';
+                    }
+                });
+            });
+        }
     });
 </script>
 {% endblock %} 
