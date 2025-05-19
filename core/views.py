@@ -104,7 +104,7 @@ def contact(request):
         lab_info = None
     
     # Get active job positions
-    job_positions = JobPosition.objects.filter(is_active=True)
+    job_positions = JobPosition.objects.all()
     
     context = {
         'lab_info': lab_info,

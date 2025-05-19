@@ -170,18 +170,14 @@ class SocialMedia(models.Model):
 
 class JobPosition(models.Model):
     title = models.CharField(max_length=200)
-    position = models.CharField(max_length=200, help_text="Position title/type")
     contact_email = models.EmailField(help_text="Contact email for applications")
-    date_posted = models.DateField(auto_now_add=True)
-    application_deadline = models.DateField(help_text="Application deadline")
+    application_deadline = models.TextField(help_text="Application deadline")
     description = models.TextField(help_text="Detailed description of the position")
     requirements = models.TextField(help_text="Requirements for the position")
     instructions = models.TextField(help_text="Application instructions", blank=True)
     notes = models.TextField(blank=True, help_text="Additional notes about the position")
-    is_active = models.BooleanField(default=True, help_text="Whether this position is currently open")
     
     class Meta:
-        ordering = ['-date_posted']
         verbose_name = "Job Position"
         verbose_name_plural = "Job Positions"
     

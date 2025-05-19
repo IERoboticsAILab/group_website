@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load markdown_extras %}
 
 {% block title %}Research Group - Contact{% endblock %}
 
@@ -44,26 +45,29 @@
     <div class="row mt-4">
         {% for job in job_positions %}
         <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
+            <div class="card mb-4 h-100">
+                <div class="card-body d-flex flex-column">
                     <h3>{{ job.title }}</h3>
                     
-                    <h5 class="mt-4">DESCRIPTION</h5>
-                    <div>{{ job.description|linebreaks }}</div>
+                    <div class="flex-grow-1">
+                        <h5 class="mt-4">DESCRIPTION</h5>
+                        <div class="job-content">{{ job.description|markdown2safe }}</div>
+                        
+                        <h5 class="mt-4">REQUIREMENTS</h5>
+                        <div class="job-content">{{ job.requirements|markdown2safe }}</div>
+                        
+                        {% if job.instructions %}
+                        <h5 class="mt-4">APPLICATION INSTRUCTIONS</h5>
+                        <div class="job-content">{{ job.instructions|markdown2safe }}</div>
+                        {% endif %}
+                    </div>
                     
-                    <h5 class="mt-4">REQUIREMENTS</h5>
-                    <div>{{ job.requirements|linebreaks }}</div>
-                    
-                    {% if job.instructions %}
-                    <h5 class="mt-4">APPLICATION INSTRUCTIONS</h5>
-                    <div>{{ job.instructions|linebreaks }}</div>
-                    {% endif %}
-                    
+                    <hr class="my-4">
                     <div class="mt-3">
                         <p><i class="bi bi-envelope me-2"></i><a href="mailto:{{ job.contact_email }}">{{ job.contact_email }}</a></p>
-                        <p><i class="bi bi-calendar me-2"></i>Deadline: {{ job.application_deadline|date:"d/m/Y" }}</p>
+                        <p><i class="bi bi-calendar me-2"></i>Deadline: {{ job.application_deadline }}</p>
                         {% if job.notes %}
-                        <p><i class="bi bi-info-circle me-2"></i>{{ job.notes }}</p>
+                        <p><i class="bi bi-info-circle me-2"></i>{{ job.notes|markdown2safe }}</p>
                         {% endif %}
                     </div>
                 </div>
@@ -72,95 +76,8 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3>Graduate Visiting Student</h3>
-                    
-                    <h5 class="mt-4">DESCRIPTION</h5>
-                    <ul>
-                        <li>
-                            <strong>Research</strong>: Contribute to the ongoing development of the ROBOPRENEUR 
-                            project conducting research on autonomous decision-making, AI-driven 
-                            creative processes, and blockchain-based economic transactions.
-                        </li>
-                        <li>
-                            <strong>Robotic Systems Development</strong>: Conduct research on advanced 
-                            algorithms that enable robots to autonomously generate, market, and sell 
-                            their own labor. Refine the integration of robotics with blockchain technology 
-                            to ensure secure and efficient economic autonomy.
-                        </li>
-                        <li>
-                            <strong>Publication and Dissemination</strong>: Produce high-quality research publications 
-                            and present findings at international conferences. Contribute to the 
-                            dissemination of the project's outcomes through academic and industry 
-                            channels.
-                        </li>
-                    </ul>
-                    
-                    <h5 class="mt-4">REQUIREMENTS</h5>
-                    <ul>
-                        <li>BSc. in Robotics, Artificial Intelligence, Computer Science, or a related field.</li>
-                        <li>Familiarity with blockchain-based technology.</li>
-                        <li>Ability to work independently and as part of a collaborative team.</li>
-                    </ul>
-                    
-                    <h5 class="mt-4">APPLICATION INSTRUCTIONS</h5>
-                    <p>CV and links to personal projects (personal website, code repos, etc.) should be sent to the address below</p>
-                    
-                    <div class="mt-3">
-                        <p><i class="bi bi-envelope me-2"></i><a href="mailto:eduardo.castello@ie.edu">eduardo.castello@ie.edu</a></p>
-                        <p><i class="bi bi-calendar me-2"></i>Deadline: Application Period: 1/11/2024 - 1/6/2025</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3>MSCA Postdoctoral Researcher</h3>
-                    
-                    <h5 class="mt-4">DESCRIPTION</h5>
-                    <ul>
-                        <li>
-                            <strong>Research and Development</strong>: Contribute to the ongoing development of the 
-                            ROBOPRENEUR research line. By exploring this line of research, we seek 
-                            to understand new human–robot interaction methods, where robots can be 
-                            understood not only as economic tools but also as economic peers.
-                        </li>
-                        <li>
-                            <strong>Robotics Integration</strong>: Design and implement advanced algorithms that 
-                            enable robots to autonomously generate, market, and sell their own labor. 
-                            Refine the integration of robotics with blockchain technology to ensure 
-                            secure and efficient economic autonomy.
-                        </li>
-                        <li>
-                            <strong>Collaboration and Mentorship</strong>: Collaborate with faculty, graduate students, 
-                            and other researchers in the department to advance the project's objectives. 
-                            Provide mentorship and guidance to graduate students involved in related 
-                            research.
-                        </li>
-                        <li>
-                            <strong>Publication and Dissemination</strong>: Produce high-quality research publications 
-                            and present findings at international conferences. Contribute to the 
-                            dissemination of the project's outcomes through academic and industry 
-                            channels.
-                        </li>
-                    </ul>
-                    
-                    <h5 class="mt-4">REQUIREMENTS</h5>
-                    <ul>
-                        <li>Ph.D. in Robotics, Artificial Intelligence, Computer Science, or a related field.</li>
-                        <li>Strong background in blockchain-based technology.</li>
-                        <li>Proven track record of high-quality research publications in relevant fields.</li>
-                        <li>Excellent communication, organizational, and leadership skills.</li>
-                        <li>Ability to work independently and as part of a collaborative team.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="alert alert-info mt-4">
+        <p class="mb-0">There are currently no open positions. Please check back later or contact us directly to inquire about future opportunities.</p>
     </div>
     {% endif %}
 </div>

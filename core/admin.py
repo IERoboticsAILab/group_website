@@ -130,8 +130,7 @@ class SocialMediaAdmin(admin.ModelAdmin):
 
 @admin.register(JobPosition)
 class JobPositionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'position', 'contact_email', 'application_deadline', 'is_active')
-    list_filter = ('is_active',)
-    search_fields = ('title', 'position', 'description')
-    date_hierarchy = 'application_deadline'
+    list_display = ('title', 'contact_email', 'application_deadline')
+    list_filter = ()
+    search_fields = ('title', 'description')
 
