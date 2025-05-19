@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import (
     HomeContent, ResearchProject, TeamMember,
-    Publication, LabInfo, ResearchLine
+    Publication, LabInfo, ResearchLine, JobPosition
 )
 from django.db.models import Prefetch
 from itertools import zip_longest
@@ -103,8 +103,12 @@ def contact(request):
     except LabInfo.DoesNotExist:
         lab_info = None
     
+    # Get active job positions
+    job_positions = JobPosition.objects.filter(is_active=True)
+    
     context = {
         'lab_info': lab_info,
+        'job_positions': job_positions,
     }
     
     return render(request, 'core/contact.html', context)

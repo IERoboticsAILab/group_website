@@ -6,9 +6,12 @@
 {% block content %}
 <div class="row">
     <div class="col-md-6">
-        <img src="{% static 'images/Impact.webp' %}" alt="IE University School of Science & Technology" class="img-fluid mb-4" style="max-width: 500px;">
-        
-        <img src="{% static 'images/school.webp' %}" alt="iMPACT XCELERATOR" class="img-fluid mb-5" style="max-width: 500px;">
+        <div class="card mb-4">
+            <div class="card-body">
+                <img src="{% static 'images/Impact.webp' %}" alt="IE University School of Science & Technology" class="img-fluid mb-3" style="max-width: 250px;">
+                <img src="{% static 'images/school.webp' %}" alt="iMPACT XCELERATOR" class="img-fluid" style="max-width: 250px;">
+            </div>
+        </div>
         
         <h2 class="mt-4 mb-4">Physical Location</h2>
         
@@ -28,5 +31,134 @@
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.991709351922!2d-3.689357684617775!3d40.4768249793572!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4229475fc7e749%3A0xe5b9f07c471e627e!2sIE%20University!5e0!3m2!1sen!2ses!4v1656423593855!5m2!1sen!2ses" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
+</div>
+
+<div class="mt-5">
+    <h2 class="mb-4">Open positions and more</h2>
+    <p>We are always looking for new talents to join our team. If you are interested in any of the positions listed below, please contact us.</p>
+    
+    {% if job_positions %}
+    <div class="row mt-4">
+        {% for job in job_positions %}
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3>{{ job.title }}</h3>
+                    
+                    <h5 class="mt-4">DESCRIPTION</h5>
+                    <div>{{ job.description|linebreaks }}</div>
+                    
+                    <h5 class="mt-4">REQUIREMENTS</h5>
+                    <div>{{ job.requirements|linebreaks }}</div>
+                    
+                    {% if job.instructions %}
+                    <h5 class="mt-4">APPLICATION INSTRUCTIONS</h5>
+                    <div>{{ job.instructions|linebreaks }}</div>
+                    {% endif %}
+                    
+                    <div class="mt-3">
+                        <p><i class="bi bi-envelope me-2"></i><a href="mailto:{{ job.contact_email }}">{{ job.contact_email }}</a></p>
+                        <p><i class="bi bi-calendar me-2"></i>Deadline: {{ job.application_deadline|date:"d/m/Y" }}</p>
+                        {% if job.notes %}
+                        <p><i class="bi bi-info-circle me-2"></i>{{ job.notes }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3>Graduate Visiting Student</h3>
+                    
+                    <h5 class="mt-4">DESCRIPTION</h5>
+                    <ul>
+                        <li>
+                            <strong>Research</strong>: Contribute to the ongoing development of the ROBOPRENEUR 
+                            project conducting research on autonomous decision-making, AI-driven 
+                            creative processes, and blockchain-based economic transactions.
+                        </li>
+                        <li>
+                            <strong>Robotic Systems Development</strong>: Conduct research on advanced 
+                            algorithms that enable robots to autonomously generate, market, and sell 
+                            their own labor. Refine the integration of robotics with blockchain technology 
+                            to ensure secure and efficient economic autonomy.
+                        </li>
+                        <li>
+                            <strong>Publication and Dissemination</strong>: Produce high-quality research publications 
+                            and present findings at international conferences. Contribute to the 
+                            dissemination of the project's outcomes through academic and industry 
+                            channels.
+                        </li>
+                    </ul>
+                    
+                    <h5 class="mt-4">REQUIREMENTS</h5>
+                    <ul>
+                        <li>BSc. in Robotics, Artificial Intelligence, Computer Science, or a related field.</li>
+                        <li>Familiarity with blockchain-based technology.</li>
+                        <li>Ability to work independently and as part of a collaborative team.</li>
+                    </ul>
+                    
+                    <h5 class="mt-4">APPLICATION INSTRUCTIONS</h5>
+                    <p>CV and links to personal projects (personal website, code repos, etc.) should be sent to the address below</p>
+                    
+                    <div class="mt-3">
+                        <p><i class="bi bi-envelope me-2"></i><a href="mailto:eduardo.castello@ie.edu">eduardo.castello@ie.edu</a></p>
+                        <p><i class="bi bi-calendar me-2"></i>Deadline: Application Period: 1/11/2024 - 1/6/2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3>MSCA Postdoctoral Researcher</h3>
+                    
+                    <h5 class="mt-4">DESCRIPTION</h5>
+                    <ul>
+                        <li>
+                            <strong>Research and Development</strong>: Contribute to the ongoing development of the 
+                            ROBOPRENEUR research line. By exploring this line of research, we seek 
+                            to understand new human–robot interaction methods, where robots can be 
+                            understood not only as economic tools but also as economic peers.
+                        </li>
+                        <li>
+                            <strong>Robotics Integration</strong>: Design and implement advanced algorithms that 
+                            enable robots to autonomously generate, market, and sell their own labor. 
+                            Refine the integration of robotics with blockchain technology to ensure 
+                            secure and efficient economic autonomy.
+                        </li>
+                        <li>
+                            <strong>Collaboration and Mentorship</strong>: Collaborate with faculty, graduate students, 
+                            and other researchers in the department to advance the project's objectives. 
+                            Provide mentorship and guidance to graduate students involved in related 
+                            research.
+                        </li>
+                        <li>
+                            <strong>Publication and Dissemination</strong>: Produce high-quality research publications 
+                            and present findings at international conferences. Contribute to the 
+                            dissemination of the project's outcomes through academic and industry 
+                            channels.
+                        </li>
+                    </ul>
+                    
+                    <h5 class="mt-4">REQUIREMENTS</h5>
+                    <ul>
+                        <li>Ph.D. in Robotics, Artificial Intelligence, Computer Science, or a related field.</li>
+                        <li>Strong background in blockchain-based technology.</li>
+                        <li>Proven track record of high-quality research publications in relevant fields.</li>
+                        <li>Excellent communication, organizational, and leadership skills.</li>
+                        <li>Ability to work independently and as part of a collaborative team.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %} 

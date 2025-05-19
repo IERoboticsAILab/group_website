@@ -167,3 +167,23 @@ class SocialMedia(models.Model):
     
     def has_any_links(self):
         return bool(self.github or self.youtube)
+
+class JobPosition(models.Model):
+    title = models.CharField(max_length=200)
+    position = models.CharField(max_length=200, help_text="Position title/type")
+    contact_email = models.EmailField(help_text="Contact email for applications")
+    date_posted = models.DateField(auto_now_add=True)
+    application_deadline = models.DateField(help_text="Application deadline")
+    description = models.TextField(help_text="Detailed description of the position")
+    requirements = models.TextField(help_text="Requirements for the position")
+    instructions = models.TextField(help_text="Application instructions", blank=True)
+    notes = models.TextField(blank=True, help_text="Additional notes about the position")
+    is_active = models.BooleanField(default=True, help_text="Whether this position is currently open")
+    
+    class Meta:
+        ordering = ['-date_posted']
+        verbose_name = "Job Position"
+        verbose_name_plural = "Job Positions"
+    
+    def __str__(self):
+        return self.title

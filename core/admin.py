@@ -5,7 +5,8 @@ from .models import (
     HomeContent, ResearchProject, TeamMember, 
     Publication, LabInfo,
     ResearchLine, SocialMedia,
-    ResearchLineGalleryImage, ProjectGalleryImage
+    ResearchLineGalleryImage, ProjectGalleryImage,
+    JobPosition
 )
 
 # Content Management
@@ -112,6 +113,7 @@ class ResearchLineAdmin(admin.ModelAdmin):
 @admin.register(SocialMedia)
 class SocialMediaAdmin(admin.ModelAdmin):
     app_label = 'Content Management'
+    list_display = ('github', 'youtube')
     
     def has_add_permission(self, request):
         # Only allow one instance of SocialMedia
@@ -125,4 +127,11 @@ class SocialMediaAdmin(admin.ModelAdmin):
             obj = self.model.objects.first()
             return redirect('admin:core_socialmedia_change', obj.id)
         return super().changelist_view(request, extra_context)
+
+@admin.register(JobPosition)
+class JobPositionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'position', 'contact_email', 'application_deadline', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'position', 'description')
+    date_hierarchy = 'application_deadline'
 
