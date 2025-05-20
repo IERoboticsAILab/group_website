@@ -6,7 +6,7 @@
 {% block content %}
 
 {% if pis %}
-<div class="container" style="max-width: 1100px;">
+<div class="container" style="max-width: 1010px;">
     <div class="card mb-5 shadow-sm mt-5">
         <div class="card-body p-4">
             <div class="row justify-content-center">
@@ -15,7 +15,7 @@
                     {% for member in pis %}
                     <h1 class="fw-bold">{{ member.first_name }} {{ member.last_name }}</h1>
                     {% if member.position %}
-                    <p class="mb-4">{{ member.position }}</p>
+                    <p class="mb-4 fs-5">{{ member.position }}</p>
                     {% endif %}
                     
                     <div class="social-links d-flex gap-3 mb-3">
