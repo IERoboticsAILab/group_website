@@ -6,52 +6,54 @@
 {% block content %}
 
 {% if pis %}
-<div class="card mb-5 shadow-sm mt-5">
-    <div class="card-body p-4">
-        <div class="row">
-            <div class="col-md-8">
-                <h3 class="mb-3">Principal investigator</h3>
-                {% for member in pis %}
-                <h1 class="fw-bold">{{ member.first_name }} {{ member.last_name }}</h1>
-                {% if member.position %}
-                <p class="mb-4">{{ member.position }}</p>
-                {% endif %}
-                
-                <div class="social-links d-flex gap-3 mb-3">
-                    {% if member.github %}
-                    <a href="{{ member.github }}" target="_blank">
-                        <i class="bi bi-github fs-4"></i>
-                    </a>
+<div class="container" style="max-width: 1100px;">
+    <div class="card mb-5 shadow-sm mt-5">
+        <div class="card-body p-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h3 class="mb-3">Principal investigator</h3>
+                    {% for member in pis %}
+                    <h1 class="fw-bold">{{ member.first_name }} {{ member.last_name }}</h1>
+                    {% if member.position %}
+                    <p class="mb-4">{{ member.position }}</p>
                     {% endif %}
                     
-                    {% if member.linkedin %}
-                    <a href="{{ member.linkedin }}" target="_blank">
-                        <i class="bi bi-linkedin fs-4"></i>
-                    </a>
-                    {% endif %}
-                    
-                    {% if member.email %}
-                    <a href="mailto:{{ member.email }}">
-                        <i class="bi bi-envelope fs-4"></i>
-                    </a>
-                    {% endif %}
-                    
-                    {% if member.personal_website %}
-                    <a href="{{ member.personal_website }}" target="_blank">
-                        <i class="bi bi-globe fs-4"></i>
-                    </a>
-                    {% endif %}
+                    <div class="social-links d-flex gap-3 mb-3">
+                        {% if member.github %}
+                        <a href="{{ member.github }}" target="_blank">
+                            <i class="bi bi-github fs-4"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if member.linkedin %}
+                        <a href="{{ member.linkedin }}" target="_blank">
+                            <i class="bi bi-linkedin fs-4"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if member.email %}
+                        <a href="mailto:{{ member.email }}">
+                            <i class="bi bi-envelope fs-4"></i>
+                        </a>
+                        {% endif %}
+                        
+                        {% if member.personal_website %}
+                        <a href="{{ member.personal_website }}" target="_blank">
+                            <i class="bi bi-globe fs-4"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-            <div class="col-md-4 text-center">
-                {% for member in pis %}
-                {% if member.image %}
-                <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 250px; height: 250px; object-fit: cover;">
-                {% else %}
-                <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 250px; height: 250px; object-fit: cover;">
-                {% endif %}
-                {% endfor %}
+                <div class="col-md-4 text-center">
+                    {% for member in pis %}
+                    {% if member.image %}
+                    <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 250px; height: 250px; object-fit: cover;">
+                    {% else %}
+                    <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 250px; height: 250px; object-fit: cover;">
+                    {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -65,38 +67,40 @@
         <div class="row">
             {% for member in people %}
             <div class="col-md-3 mb-5 text-center">
-                <div class="team-member">
-                    {% if member.image %}
-                    <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid mb-3 border" style="width: 180px; height: 180px; object-fit: cover;">
-                    {% else %}
-                    <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid mb-3 border" style="width: 180px; height: 180px; object-fit: cover;">
-                    {% endif %}
+                <div class="team-member d-flex flex-column align-items-center h-80">
+                    <div class="mb-3">
+                        {% if member.image %}
+                        <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 180px; height: 180px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 180px; height: 180px; object-fit: cover;">
+                        {% endif %}
+                    </div>
                     <h4 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h4>
                     {% if member.position %}
                     <p class="text-muted mb-3">{{ member.position }}</p>
                     {% endif %}
                     
-                    <div class="social-links d-flex justify-content-center gap-2">
+                    <div class="social-links d-flex justify-content-center gap-2 mt-auto">
                         {% if member.github %}
                         <a href="{{ member.github }}" target="_blank">
-                            <i class="bi bi-github"></i>
+                            <i class="bi bi-github fs-4"></i>
                         </a>
                         {% endif %}
                         
                         {% if member.linkedin %}
                         <a href="{{ member.linkedin }}" target="_blank">
-                            <i class="bi bi-linkedin"></i>
+                            <i class="bi bi-linkedin fs-4"></i>
                         </a>
                         {% endif %}
                         
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}">
-                            <i class="bi bi-envelope"></i>
+                            <i class="bi bi-envelope fs-4"></i>
                         </a>
                         {% endif %}
                         {% if member.personal_website %}
                         <a href="{{ member.personal_website }}" target="_blank">
-                            <i class="bi bi-globe"></i>
+                            <i class="bi bi-globe fs-4"></i>
                         </a>
                         {% endif %}
                     </div>
@@ -115,41 +119,41 @@
         <div class="row">
             {% for member in alumni %}
             <div class="col-md-3 mb-4 text-center">
-                <div class="team-member">
-                    {% if member.image %}
-                    <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid mb-3 border" style="width: 180px; height: 180px; object-fit: cover;">
-                    {% else %}
-                    <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid mb-3 border" style="width: 180px; height: 180px; object-fit: cover;">
-                    {% endif %}
+                <div class="team-member d-flex flex-column align-items-center h-100">
+                    <div class="mb-3">
+                        {% if member.image %}
+                        <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 180px; height: 180px; object-fit: cover;">
+                        {% else %}
+                        <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 180px; height: 180px; object-fit: cover;">
+                        {% endif %}
+                    </div>
                     <h4 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h4>
                     {% if member.position %}
                     <p class="text-muted mb-3">{{ member.position }}</p>
                     {% endif %}
                     
-                    <div class="social-links d-flex justify-content-center gap-2">
+                    <div class="social-links d-flex justify-content-center gap-2 mt-auto">
                         {% if member.github %}
                         <a href="{{ member.github }}" target="_blank">
-                            <i class="bi bi-github"></i>
+                            <i class="bi bi-github fs-4"></i>
                         </a>
                         {% endif %}
                         
                         {% if member.linkedin %}
                         <a href="{{ member.linkedin }}" target="_blank">
-                            <i class="bi bi-linkedin"></i>
+                            <i class="bi bi-linkedin fs-4"></i>
                         </a>
                         {% endif %}
                         
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}">
-                            <i class="bi bi-envelope"></i>
-                        </a>
-
-                        {% if member.personal_website %}
-                        <a href="{{ member.personal_website }}" target="_blank">
-                            <i class="bi bi-globe"></i>
+                            <i class="bi bi-envelope fs-4"></i>
                         </a>
                         {% endif %}
-
+                        {% if member.personal_website %}
+                        <a href="{{ member.personal_website }}" target="_blank">
+                            <i class="bi bi-globe fs-4"></i>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
