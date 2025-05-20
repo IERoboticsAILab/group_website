@@ -101,6 +101,10 @@ main {
    margin: 0;
    opacity: 0.8;
  }
+
+ .projects-section {
+  padding: 0 4rem;
+ }
  
  .nav-arrow {
    position: absolute;
