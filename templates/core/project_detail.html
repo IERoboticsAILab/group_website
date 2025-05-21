@@ -3,94 +3,6 @@
 
 {% block title %}{{ project.title }} | Research Group{% endblock %}
 
-{% block extra_css %}
-<style>
-    .project-banner {
-        height: 500px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        width: 100%;
-        margin-bottom: 0;
-    }
-    
-    .banner-overlay {
-        background: rgba(0, 0, 0, 0.4);
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .banner-content {
-        color: white;
-        text-align: center;
-        padding: 20px;
-    }
-    
-    .project-content {
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
-    
-    .gallery-img {
-        height: 150px;
-        object-fit: cover;
-        margin-bottom: 15px;
-        cursor: pointer;
-    }
-    
-    .team-member-card {
-        text-align: center;
-        margin-bottom: 15px;
-    }
-    
-    .team-member-card img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-bottom: 10px;
-    }
-    
-    .project-date {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
-    
-    .content-card {
-        margin-top: -100px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        z-index: 100;
-        position: relative;
-        margin-bottom: 40px;
-    }
-    
-    .abstract-section {
-        padding: 40px;
-    }
-    
-    .abstract-section h2 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-    }
-    
-    .project-sections {
-        margin-top: 30px;
-    }
-    
-    .section-card {
-        margin-bottom: 30px;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 <!-- Project Header Banner - Full Width -->
 <div class="container-fluid p-0">
@@ -131,23 +43,36 @@
 <div class="container">
     <div class="content-card">
         <div class="abstract-section">
-            <h2>Abstract</h2>
-            <div class="project-content">
-                {{ project.description|linebreaks }}
-                
-                {% if project.content %}
-                {{ project.content|linebreaks }}
+            <div class="row">
+                {% if project.video_url %}
+                <div class="col-md-6">
+                    <div class="video-container">
+                        <iframe src="{{ project.video_url }}" title="{{ project.title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Abstract</h2>
+                    <div class="project-content">
+                        {{ project.description|linebreaks }}
+                        
+                        {% if project.content %}
+                        {{ project.content|linebreaks }}
+                        {% endif %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-12">
+                    <h2>Abstract</h2>
+                    <div class="project-content">
+                        {{ project.description|linebreaks }}
+                        
+                        {% if project.content %}
+                        {{ project.content|linebreaks }}
+                        {% endif %}
+                    </div>
+                </div>
                 {% endif %}
             </div>
-            
-            <!-- Video Section for YouTube if available -->
-            {% if project.youtube_embed_url %}
-            <div class="mt-5">
-                <div class="ratio ratio-16x9">
-                    <iframe src="{{ project.youtube_embed_url }}" title="{{ project.title }}" allowfullscreen></iframe>
-                </div>
-            </div>
-            {% endif %}
         </div>
     </div>
 
