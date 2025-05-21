@@ -55,17 +55,6 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'projects' %}">Projects</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ research_line.title }}</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
     <!-- Banner Image -->
     {% if research_line.banner_image %}
     <div class="research-banner" style="background-image: url('{{ research_line.banner_image.url }}');">
