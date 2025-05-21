@@ -11,6 +11,48 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
+[data-bs-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-bs-theme="dark"] body {
+  background-color: #212529;
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .navbar {
+  background-color: #212529 !important;
+}
+
+[data-bs-theme="dark"] .navbar-light .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+[data-bs-theme="dark"] .navbar-light .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .navbar-light .navbar-brand {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] .btn-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+[data-bs-theme="dark"] .btn-link:hover {
+  color: #fff;
+}
+
+[data-bs-theme="dark"] footer {
+  background-color: #212529;
+}
+
+/* Invert logo in dark mode */
+[data-bs-theme="dark"] .navbar-brand img {
+  filter: invert(1);
+}
+
 /* Header & Navigation */
 .navbar {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
