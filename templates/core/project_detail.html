@@ -6,10 +6,12 @@
 {% block extra_css %}
 <style>
     .project-banner {
-        height: 300px;
+        height: 500px;
         background-size: cover;
         background-position: center;
         position: relative;
+        width: 100%;
+        margin-bottom: 0;
     }
     
     .banner-overlay {
@@ -54,124 +56,175 @@
         border-radius: 50%;
         margin-bottom: 10px;
     }
+    
+    .project-date {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    
+    .content-card {
+        margin-top: -100px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        z-index: 100;
+        position: relative;
+        margin-bottom: 40px;
+    }
+    
+    .abstract-section {
+        padding: 40px;
+    }
+    
+    .abstract-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .project-sections {
+        margin-top: 30px;
+    }
+    
+    .section-card {
+        margin-bottom: 30px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Project Header Banner -->
-{% if project.banner_image %}
-<div class="project-banner mb-5" style="background-image: url('{{ project.banner_image.url }}');">
-    <div class="banner-overlay">
-        <div class="banner-content">
-            <h1 class="display-4">{{ project.title }}</h1>
-            {% if project.research_lines_set.all %}
-            <p class="lead">
-                {% for line in project.research_lines_set.all %}
-                {{ line.title }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            {% endif %}
+<!-- Project Header Banner - Full Width -->
+<div class="container-fluid p-0">
+    {% if project.banner_image %}
+    <div class="project-banner" style="background-image: url('{{ project.banner_image.url }}');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                <h1 class="display-4">{{ project.title }}</h1>
+                <p class="lead">Research Project</p>
+            </div>
         </div>
     </div>
-</div>
-{% elif project.image %}
-<div class="project-banner mb-5" style="background-image: url('{{ project.image.url }}');">
-    <div class="banner-overlay">
-        <div class="banner-content">
-            <h1 class="display-4">{{ project.title }}</h1>
-            {% if project.research_lines_set.all %}
-            <p class="lead">
-                {% for line in project.research_lines_set.all %}
-                {{ line.title }}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            </p>
-            {% endif %}
+    {% elif project.image %}
+    <div class="project-banner" style="background-image: url('{{ project.image.url }}');">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                <h1 class="display-4">{{ project.title }}</h1>
+                <p class="lead">Research Project</p>
+            </div>
         </div>
     </div>
-</div>
-{% else %}
-<div class="bg-light text-center p-5 mb-5">
-    <h1 class="display-4">{{ project.title }}</h1>
-    {% if project.research_lines_set.all %}
-    <p class="lead">
-        {% for line in project.research_lines_set.all %}
-        {{ line.title }}{% if not forloop.last %}, {% endif %}
-        {% endfor %}
-    </p>
+    {% else %}
+    <div class="project-banner bg-dark">
+        <div class="banner-overlay">
+            <div class="banner-content">
+                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                <h1 class="display-4">{{ project.title }}</h1>
+                <p class="lead">Research Project</p>
+            </div>
+        </div>
+    </div>
     {% endif %}
 </div>
-{% endif %}
 
-<div class="row">
-    <!-- Main Content -->
-    <div class="col-lg-8">
-        <div class="card mb-4">
-            <div class="card-body">
-                <h2 class="mb-4">Project Overview</h2>
-                <p>{{ project.description }}</p>
+<!-- Content Card Overlapping Banner -->
+<div class="container">
+    <div class="content-card">
+        <div class="abstract-section">
+            <h2>Abstract</h2>
+            <div class="project-content">
+                {{ project.description|linebreaks }}
                 
                 {% if project.content %}
-                <div class="project-content mt-4">
-                    {{ project.content|linebreaks }}
-                </div>
-                {% endif %}
-                
-                <!-- Gallery Images -->
-                {% if project.gallery_images.all %}
-                <h3 class="mt-5 mb-3">Project Gallery</h3>
-                <div class="row">
-                    {% for img in project.gallery_images.all %}
-                    <div class="col-md-4">
-                        <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
-                        {% if img.caption %}
-                        <p class="small text-muted">{{ img.caption }}</p>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
+                {{ project.content|linebreaks }}
                 {% endif %}
             </div>
+            
+            <!-- Video Section for YouTube if available -->
+            {% if project.youtube_embed_url %}
+            <div class="mt-5">
+                <div class="ratio ratio-16x9">
+                    <iframe src="{{ project.youtube_embed_url }}" title="{{ project.title }}" allowfullscreen></iframe>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
-    
-    <!-- Sidebar -->
-    <div class="col-lg-4">
-        {% if project.research_lines_set.all %}
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Research Lines</h5>
+
+    <!-- Project Sections in Rows -->
+    <div class="project-sections">
+        <!-- Gallery Images -->
+        {% if project.gallery_images.all %}
+        <div class="section-card">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Project Gallery</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for img in project.gallery_images.all %}
+                        <div class="col-md-4">
+                            <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                            {% if img.caption %}
+                            <p class="small text-muted">{{ img.caption }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                {% for line in project.research_lines_set.all %}
-                <h6>{{ line.title }}</h6>
-                <p>{{ line.description|truncatewords:50 }}</p>
-                <a href="{{ line.get_absolute_url }}" class="btn btn-outline-primary mb-3">View Research Line</a>
-                {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Research Lines -->
+        {% if project.research_lines_set.all %}
+        <div class="section-card">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Research Lines</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for line in project.research_lines_set.all %}
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5>{{ line.title }}</h5>
+                                    <p>{{ line.description|truncatewords:50 }}</p>
+                                    <a href="{{ line.get_absolute_url }}" class="btn btn-outline-primary">View Research Line</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
         {% endif %}
         
         <!-- Team Members -->
         {% if project.team_members.all %}
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Team Members</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    {% for member in project.team_members.all %}
-                    <div class="col-6 team-member-card">
-                        {% if member.image %}
-                        <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}">
-                        {% else %}
-                        <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}">
-                        {% endif %}
-                        <p class="mb-0"><strong>{{ member.first_name }} {{ member.last_name }}</strong></p>
-                        {% if member.position %}
-                        <p class="small text-muted">{{ member.position }}</p>
-                        {% endif %}
+        <div class="section-card">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Team Members</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for member in project.team_members.all %}
+                        <div class="col-md-3 col-sm-6 team-member-card">
+                            {% if member.image %}
+                            <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% else %}
+                            <img src="{% static 'images/placeholder-person.jpg' %}" alt="{{ member.first_name }} {{ member.last_name }}">
+                            {% endif %}
+                            <p class="mb-0"><strong>{{ member.first_name }} {{ member.last_name }}</strong></p>
+                            {% if member.position %}
+                            <p class="small text-muted">{{ member.position }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -179,31 +232,29 @@
         
         <!-- Publications -->
         {% if project.publications.all %}
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Related Publications</h5>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    {% for pub in project.publications.all %}
-                    <li class="list-group-item">
-                        <p class="mb-1"><strong>{{ pub.title }}</strong></p>
-                        <p class="small mb-0">{{ pub.authors }}</p>
-                        <p class="small text-muted">{{ pub.venue }}, {{ pub.year }}</p>
-                        {% if pub.link %}
-                        <a href="{{ pub.link }}" target="_blank" class="small">View Publication</a>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
+        <div class="section-card">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Related Publications</h3>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for pub in project.publications.all %}
+                        <div class="list-group-item">
+                            <p class="mb-1"><strong>{{ pub.title }}</strong></p>
+                            <p class="small mb-0">{{ pub.authors }}</p>
+                            <p class="small text-muted">{{ pub.venue }}, {{ pub.year }}</p>
+                            {% if pub.link %}
+                            <a href="{{ pub.link }}" target="_blank" class="btn btn-sm btn-outline-primary mt-2">View Publication</a>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
         {% endif %}
         
-        <!-- Back to Projects -->
-        <div class="d-grid gap-2">
-            <a href="{% url 'projects' %}" class="btn btn-secondary">Back to All Projects</a>
-        </div>
     </div>
 </div>
 {% endblock %} 
