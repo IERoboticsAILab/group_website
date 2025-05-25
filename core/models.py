@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
 from filer.fields.image import FilerImageField
+from prose.fields import RichTextField
 
 class HomeContent(models.Model):
     headline = models.CharField(max_length=200)
@@ -22,6 +23,7 @@ class ResearchLine(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField(auto_now_add=True)
     description = models.TextField()
+    content = RichTextField(blank=True, help_text="Rich text content with images for the research line")
     video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the research line")
     banner_image = FilerImageField(null=True, blank=True, related_name="research_line_banners", on_delete=models.SET_NULL, help_text="Banner image for the research line")
     slug = models.SlugField(max_length=250, unique=True, blank=True)
@@ -63,6 +65,7 @@ class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField(auto_now_add=True)
     description = models.TextField()
+    content = RichTextField(blank=True, help_text="Rich text content with images for the project")
     video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the project")
     banner_image = FilerImageField(null=True, blank=True, related_name="project_banners", on_delete=models.SET_NULL, help_text="Banner image for the project")
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='projects')

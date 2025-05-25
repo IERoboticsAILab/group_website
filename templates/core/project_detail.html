@@ -59,10 +59,6 @@
                     <h2>Abstract</h2>
                     <div class="project-content">
                         {{ project.description|linebreaks }}
-                        
-                        {% if project.content %}
-                        {{ project.content|linebreaks }}
-                        {% endif %}
                     </div>
                 </div>
                 {% else %}
@@ -70,16 +66,24 @@
                     <h2>Abstract</h2>
                     <div class="project-content">
                         {{ project.description|linebreaks }}
-                        
-                        {% if project.content %}
-                        {{ project.content|linebreaks }}
-                        {% endif %}
                     </div>
                 </div>
                 {% endif %}
             </div>
         </div>
     </div>
+
+    <!-- Additional Content Card (if content exists) -->
+    {% if project.content %}
+    <div class="content-card">
+        <div class="abstract-section">
+            <h2>Additional Content</h2>
+            <div class="rich-content">
+                {{ project.content|safe }}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Project Sections in Rows -->
     <div class="project-sections">
