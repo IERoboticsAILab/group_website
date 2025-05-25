@@ -82,6 +82,42 @@
 
     <!-- Project Sections in Rows -->
     <div class="project-sections">
+   
+        <!-- Publications -->
+        {% if project.publications.all %}
+        <div class="section-card">
+            <h2 class="section-title">Publications</h2>
+            {% for pub in project.publications.all %}
+            <div class="publication-card">
+                <div class="publication-date">
+                    {% if pub.date %}
+                    {{ pub.date|date:"m-Y" }}
+                    {% endif %}
+                </div>
+                <h3 class="publication-title">{{ pub.title }}</h3>
+                <div class="publication-authors">{{ pub.authors }}</div>
+                <div>
+                    {% if pub.pdflink %}
+                    <a href="{{ pub.pdflink }}" target="_blank" class="publication-link">
+                        <i class="bi bi-file-pdf"></i> PDF
+                    </a>
+                    {% endif %}
+                    {% if pub.paperlink %}
+                    <a href="{{ pub.paperlink }}" target="_blank" class="publication-link">
+                        <i class="bi bi-journal-text"></i> Pre-Print
+                    </a>
+                    {% endif %}
+                    {% if pub.link %}
+                    <a href="{{ pub.link }}" target="_blank" class="publication-link">
+                        <i class="bi bi-link-45deg"></i> View Publication
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <!-- Gallery Images -->
         {% if project.gallery_images.all %}
         <div class="section-card">
@@ -152,40 +188,7 @@
         </div>
         {% endif %}
         
-        <!-- Publications -->
-        {% if project.publications.all %}
-        <div class="section-card">
-            <h2 class="section-title">Publications</h2>
-            {% for pub in project.publications.all %}
-            <div class="publication-card">
-                <div class="publication-date">
-                    {% if pub.date %}
-                    {{ pub.date|date:"m-Y" }}
-                    {% endif %}
-                </div>
-                <h3 class="publication-title">{{ pub.title }}</h3>
-                <div class="publication-authors">{{ pub.authors }}</div>
-                <div>
-                    {% if pub.pdflink %}
-                    <a href="{{ pub.pdflink }}" target="_blank" class="publication-link">
-                        <i class="bi bi-file-pdf"></i> PDF
-                    </a>
-                    {% endif %}
-                    {% if pub.paperlink %}
-                    <a href="{{ pub.paperlink }}" target="_blank" class="publication-link">
-                        <i class="bi bi-journal-text"></i> Pre-Print
-                    </a>
-                    {% endif %}
-                    {% if pub.link %}
-                    <a href="{{ pub.link }}" target="_blank" class="publication-link">
-                        <i class="bi bi-link-45deg"></i> View Publication
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
+
         
     </div>
 </div>
