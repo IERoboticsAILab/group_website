@@ -12,26 +12,32 @@
 <!-- Banner Image - Full Width -->
 <div class="container-fluid p-0">
     {% if research_line.banner_image %}
-    <div class="research-banner" style="background-image: url('{{ research_line.banner_image.url }}');">
+    <div class="project-banner" style="background-image: url('{{ research_line.banner_image.url }}');">
         <div class="banner-overlay">
             <div class="banner-content">
+                <div class="project-date">{{ research_line.date|date:"m-Y" }}</div>
                 <h1 class="display-4">{{ research_line.title }}</h1>
+                <p class="lead">Research Line</p>
             </div>
         </div>
     </div>
     {% elif research_line.image %}
-    <div class="research-banner" style="background-image: url('{{ research_line.image.url }}');">
+    <div class="project-banner" style="background-image: url('{{ research_line.image.url }}');">
         <div class="banner-overlay">
             <div class="banner-content">
+                <div class="project-date">{{ research_line.date|date:"m-Y" }}</div>
                 <h1 class="display-4">{{ research_line.title }}</h1>
+                <p class="lead">Research Line</p>
             </div>
         </div>
     </div>
     {% else %}
-    <div class="research-banner bg-dark">
+    <div class="project-banner bg-dark">
         <div class="banner-overlay">
             <div class="banner-content">
+                <div class="project-date">{{ research_line.date|date:"m-Y" }}</div>
                 <h1 class="display-4">{{ research_line.title }}</h1>
+                <p class="lead">Research Line</p>
             </div>
         </div>
     </div>
@@ -51,14 +57,14 @@
                 </div>
                 <div class="col-md-6">
                     <h2>Overview</h2>
-                    <div>
+                    <div class="project-content">
                         {{ research_line.description|linebreaks }}
                     </div>
                 </div>
                 {% else %}
                 <div class="col-12">
                     <h2>Overview</h2>
-                    <div>
+                    <div class="project-content">
                         {{ research_line.description|linebreaks }}
                     </div>
                 </div>
@@ -125,6 +131,11 @@
                     {% if pub.paperlink %}
                     <a href="{{ pub.paperlink }}" target="_blank" class="publication-link">
                         <i class="bi bi-journal-text"></i> Pre-Print
+                    </a>
+                    {% endif %}
+                    {% if pub.link %}
+                    <a href="{{ pub.link }}" target="_blank" class="publication-link">
+                        <i class="bi bi-link-45deg"></i> View Publication
                     </a>
                     {% endif %}
                 </div>
