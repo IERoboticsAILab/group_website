@@ -68,39 +68,6 @@
 </div>
 {% endblock %}
 
-{% block extra_css %}
-<style>
-    .project-card {
-        position: relative;
-        transition: all 0.2s ease;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        border-radius: 12px;
-    }
-    
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .stretched-link {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 1;
-        content: "";
-    }
-    
-    .rounded-top-4 {
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-    }
-</style>
-{% endblock %}
-
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
