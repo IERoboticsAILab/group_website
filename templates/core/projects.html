@@ -9,55 +9,54 @@
 
 <!-- Combined Projects and Research Lines Grid -->
 <div class="row g-4">
-    <!-- Research Lines First -->
-    {% for research_line in research_lines %}
-    <div class="col-md-3 mb-4">
-        <div class="project-card border rounded-4 h-100">
-            <div class="project-image">
-                {% if research_line.banner_image %}
-                <img src="{{ research_line.banner_image.url }}" alt="{{ research_line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
-                {% elif research_line.image %}
-                <img src="{{ research_line.image.url }}" alt="{{ research_line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
-                {% else %}
-                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
-                    <i class="bi bi-diagram-3 pt-5" style="font-size: 3rem;"></i>
+    <!-- Combined items sorted by date (newest first) -->
+    {% for item_data in combined_items %}
+        {% if item_data.type == 'research_line' %}
+            <div class="col-md-3 mb-4">
+                <div class="project-card border rounded-4 h-100">
+                    <div class="project-image">
+                        {% if item_data.item.banner_image %}
+                        <img src="{{ item_data.item.banner_image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                        {% elif item_data.item.image %}
+                        <img src="{{ item_data.item.image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-light text-center rounded-top-4" style="height: 200px;">
+                            <i class="bi bi-diagram-3 pt-5" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="p-3 d-flex flex-column">
+                        <h5 class="fw-bold mb-2">{{ item_data.item.title }}</h5>
+                        <p class="text-muted mb-0">Research Line</p>
+                    </div>
+                    <a href="{{ item_data.item.get_absolute_url }}" class="stretched-link"></a>
                 </div>
-                {% endif %}
             </div>
-            <div class="p-3 d-flex flex-column">
-                <h5 class="fw-bold mb-2">{{ research_line.title }}</h5>
-                <p class="text-muted mb-0">Research Line</p>
+        {% elif item_data.type == 'project' %}
+            <div class="col-md-3 mb-4 project-item">
+                <div class="project-card border rounded-4 h-100">
+                    <div class="project-image">
+                        {% if item_data.item.banner_image %}
+                        <img src="{{ item_data.item.banner_image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                        {% elif item_data.item.image %}
+                        <img src="{{ item_data.item.image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="bg-light text-center rounded-top-4" style="height: 200px;">
+                            <i class="bi bi-diagram-project pt-5" style="font-size: 3rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="p-3 d-flex flex-column">
+                        <h5 class="fw-bold mb-2">{{ item_data.item.title }}</h5>
+                        <p class="text-muted mb-0">Research Project</p>
+                    </div>
+                    <a href="{% url 'project_detail' item_data.item.slug %}" class="stretched-link"></a>
+                </div>
             </div>
-            <a href="{{ research_line.get_absolute_url }}" class="stretched-link"></a>
-        </div>
-    </div>
+        {% endif %}
     {% endfor %}
     
-    <!-- Projects Next -->
-    {% for project in projects %}
-    <div class="col-md-3 mb-4 project-item">
-        <div class="project-card border rounded-4 h-100">
-            <div class="project-image">
-                {% if project.banner_image %}
-                <img src="{{ project.banner_image.url }}" alt="{{ project.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
-                {% elif project.image %}
-                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
-                {% else %}
-                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
-                    <i class="bi bi-diagram-project pt-5" style="font-size: 3rem;"></i>
-                </div>
-                {% endif %}
-            </div>
-            <div class="p-3 d-flex flex-column">
-                <h5 class="fw-bold mb-2">{{ project.title }}</h5>
-                <p class="text-muted mb-0">Research Project</p>
-            </div>
-            <a href="{% url 'project_detail' project.slug %}" class="stretched-link"></a>
-        </div>
-    </div>
-    {% endfor %}
-    
-    {% if not projects and not research_lines %}
+    {% if not combined_items %}
     <div class="col-12">
         <div class="alert alert-info">
             No projects or research lines available at the moment.

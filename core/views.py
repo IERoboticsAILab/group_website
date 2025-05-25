@@ -66,13 +66,34 @@ def publications(request):
     return render(request, 'core/publications.html', context)
 
 def projects(request):
-    # Get all projects
+    # Get all projects and research lines
     all_projects = ResearchProject.objects.filter(active=True)
     research_lines = ResearchLine.objects.filter(active=True)
     
+    # Combine both querysets and sort by date (newest first)
+    combined_items = []
+    
+    # Add projects with type identifier
+    for project in all_projects:
+        combined_items.append({
+            'item': project,
+            'type': 'project',
+            'date': project.date
+        })
+    
+    # Add research lines with type identifier
+    for research_line in research_lines:
+        combined_items.append({
+            'item': research_line,
+            'type': 'research_line',
+            'date': research_line.date
+        })
+    
+    # Sort by date (newest first)
+    combined_items.sort(key=lambda x: x['date'], reverse=True)
+    
     context = {
-        'projects': all_projects,
-        'research_lines': research_lines,
+        'combined_items': combined_items,
     }
     
     return render(request, 'core/projects.html', context)
