@@ -67,8 +67,8 @@ def publications(request):
 
 def projects(request):
     # Get all projects
-    all_projects = ResearchProject.objects.all()
-    research_lines = ResearchLine.objects.all()
+    all_projects = ResearchProject.objects.filter(active=True)
+    research_lines = ResearchLine.objects.filter(active=True)
     
     context = {
         'projects': all_projects,

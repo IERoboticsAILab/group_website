@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from django.utils import timezone
 from filer.fields.image import FilerImageField
 from prose.fields import RichTextField
 
@@ -21,7 +22,7 @@ class HomeContent(models.Model):
 
 class ResearchLine(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
     description = models.TextField()
     content = RichTextField(blank=True, help_text="Rich text content with images for the research line")
     video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the research line")
@@ -30,6 +31,7 @@ class ResearchLine(models.Model):
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='research_lines')
     publications = models.ManyToManyField('Publication', blank=True, related_name='research_lines')
     projects = models.ManyToManyField('ResearchProject', blank=True, related_name='research_lines_set')
+    active = models.BooleanField(default=True)
     
     class Meta:
         ordering = ['-date']
@@ -63,7 +65,7 @@ class ResearchLineGalleryImage(models.Model):
 
 class ResearchProject(models.Model):
     title = models.CharField(max_length=200)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
     description = models.TextField()
     content = RichTextField(blank=True, help_text="Rich text content with images for the project")
     video_url = models.URLField(blank=True, help_text="YouTube video embed URL for the project")
@@ -71,7 +73,8 @@ class ResearchProject(models.Model):
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='projects')
     publications = models.ManyToManyField('Publication', blank=True, related_name='projects')
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    
+    active = models.BooleanField(default=True)
+
     class Meta:
         ordering = ['-date']
         verbose_name = "Research Project"

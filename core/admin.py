@@ -56,7 +56,7 @@ class ProjectGalleryImageInline(admin.TabularInline):
 @admin.register(ResearchProject)
 class ResearchProjectAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'date')
+    list_display = ('title', 'formatted_date')
     list_filter = ()
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description')
@@ -64,19 +64,29 @@ class ResearchProjectAdmin(admin.ModelAdmin):
     inlines = [ProjectGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'content', 'banner_image', 'video_url')
+            'fields': ('title', 'slug', 'date', 'description', 'content', 'banner_image', 'video_url')
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications')
         }),
     )
+    
+    def formatted_date(self, obj):
+        return obj.date.strftime('%d-%m-%Y') if obj.date else '-'
+    formatted_date.short_description = 'Date'
+    formatted_date.admin_order_field = 'date'
 
 @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'date')
+    list_display = ('title', 'formatted_date')
     list_filter = ('date',)
     search_fields = ('title', 'authors', 'abstract')
+    
+    def formatted_date(self, obj):
+        return obj.date.strftime('%d-%m-%Y') if obj.date else '-'
+    formatted_date.short_description = 'Date'
+    formatted_date.admin_order_field = 'date'
 
 # Team
 @admin.register(TeamMember)
@@ -91,7 +101,7 @@ class TeamMemberAdmin(admin.ModelAdmin):
 @admin.register(ResearchLine)
 class ResearchLineAdmin(admin.ModelAdmin):
     app_label = 'Research'
-    list_display = ('title', 'date')
+    list_display = ('title', 'formatted_date')
     list_filter = ()
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('title', 'description')
@@ -99,12 +109,17 @@ class ResearchLineAdmin(admin.ModelAdmin):
     inlines = [ResearchLineGalleryImageInline]
     fieldsets = (
         (None, {
-            'fields': ('title', 'slug', 'description', 'content', 'banner_image', 'video_url')
+            'fields': ('title', 'slug', 'date', 'description', 'content', 'banner_image', 'video_url')
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications', 'projects')
         }),
     )
+    
+    def formatted_date(self, obj):
+        return obj.date.strftime('%d-%m-%Y') if obj.date else '-'
+    formatted_date.short_description = 'Date'
+    formatted_date.admin_order_field = 'date'
 
 @admin.register(SocialMedia)
 class SocialMediaAdmin(admin.ModelAdmin):
