@@ -68,7 +68,6 @@ class ResearchProject(models.Model):
     team_members = models.ManyToManyField('TeamMember', blank=True, related_name='projects')
     publications = models.ManyToManyField('Publication', blank=True, related_name='projects')
     slug = models.SlugField(max_length=250, unique=True, blank=True)
-    content = models.TextField(blank=True, help_text="Detailed content for project detail page")
     
     class Meta:
         ordering = ['-date']

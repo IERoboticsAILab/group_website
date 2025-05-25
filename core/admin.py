@@ -59,7 +59,7 @@ class ResearchProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'date')
     list_filter = ()
     prepopulated_fields = {'slug': ('title',)}
-    search_fields = ('title', 'description', 'content')
+    search_fields = ('title', 'description')
     filter_horizontal = ('team_members', 'publications')
     inlines = [ProjectGalleryImageInline]
     fieldsets = (
@@ -68,10 +68,6 @@ class ResearchProjectAdmin(admin.ModelAdmin):
         }),
         ('Related Content', {
             'fields': ('team_members', 'publications')
-        }),
-        ('Detailed Content', {
-            'fields': ('content',),
-            'classes': ('collapse',)
         }),
     )
 
