@@ -148,3 +148,17 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
+
+# Preserve PNG transparency and GIF animation
+THUMBNAIL_PRESERVE_EXTENSIONS = ('png', 'gif')
+THUMBNAIL_PRESERVE_GIF_ANIMATION = True
+THUMBNAIL_ALIASES = {
+    '': {
+        'default': {
+            'size': (120, 90),
+            'crop': True,
+            'preserve_gif_animation': True,
+            'transparency': True,
+        },
+    },
+}
