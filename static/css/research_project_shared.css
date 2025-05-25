@@ -152,4 +152,18 @@
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.single-research-line-card {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.single-research-line-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 } 

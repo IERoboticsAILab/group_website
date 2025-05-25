@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/research_project_shared.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery-slideshow.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -125,7 +126,9 @@
             <div class="row">
                 {% for img in project.gallery_images.all %}
                 <div class="col-md-4">
-                    <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                    <div class="position-relative">
+                        <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                    </div>
                     {% if img.caption %}
                     <p class="small text-muted">{{ img.caption }}</p>
                     {% endif %}
@@ -138,31 +141,57 @@
         <!-- Research Lines -->
         {% if project.research_lines_set.all %}
         <div class="section-card">
-            <h2 class="section-title">Research Lines</h2>
-            <div class="row g-4">
+            <h2 class="section-title">Research Line{% if project.research_lines_set.count > 1 %}s{% endif %}</h2>
+            {% if project.research_lines_set.count == 1 %}
                 {% for line in project.research_lines_set.all %}
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="border rounded-4 h-100">
-                        <div>
+                <div class="single-research-line-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
                             {% if line.banner_image %}
-                            <img src="{{ line.banner_image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                            <img src="{{ line.banner_image.url }}" alt="{{ line.title }}" class="img-fluid rounded" style="height: 250px; width: 100%; object-fit: cover;">
                             {% elif line.image %}
-                            <img src="{{ line.image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                            <img src="{{ line.image.url }}" alt="{{ line.title }}" class="img-fluid rounded" style="height: 250px; width: 100%; object-fit: cover;">
                             {% else %}
-                            <div class="bg-light text-center rounded-top-4" style="height: 200px;">
-                                <i class="bi bi-lightbulb pt-5" style="font-size: 3rem;"></i>
+                            <div class="bg-light text-center rounded d-flex align-items-center justify-content-center" style="height: 250px;">
+                                <i class="bi bi-lightbulb" style="font-size: 4rem; color: #6c757d;"></i>
                             </div>
                             {% endif %}
                         </div>
-                        <div class="p-3 d-flex flex-column">
-                            <h5 class="fw-bold mb-2">{{ line.title }}</h5>
-                            <p class="text-muted mb-2">{{ line.description|truncatewords:20 }}</p>
-                            <a href="{{ line.get_absolute_url }}" class="btn btn-outline-primary mt-auto">View Research Line</a>
+                        <div class="col-md-8">
+                            <h3 class="fw-bold mb-3">{{ line.title }}</h3>
+                            <p class="text-muted mb-4">{{ line.description|truncatewords:50 }}</p>
+                            <a href="{{ line.get_absolute_url }}" class="btn btn-primary">View Research Line</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-            </div>
+            {% else %}
+                <div class="row g-4">
+                    {% for line in project.research_lines_set.all %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="project-card border rounded-4 h-100">
+                            <div class="project-image">
+                                {% if line.banner_image %}
+                                <img src="{{ line.banner_image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                                {% elif line.image %}
+                                <img src="{{ line.image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
+                                {% else %}
+                                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
+                                    <i class="bi bi-lightbulb pt-5" style="font-size: 3rem;"></i>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="p-3 d-flex flex-column">
+                                <h5 class="fw-bold mb-2">{{ line.title }}</h5>
+                                <p class="text-muted mb-2">{{ line.description|truncatewords:20 }}</p>
+                                <a href="{{ line.get_absolute_url }}" class="btn btn-outline-primary mt-auto">View Research Line</a>
+                            </div>
+                            <a href="{{ line.get_absolute_url }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
         {% endif %}
         
@@ -192,4 +221,8 @@
         
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/gallery-slideshow.js' %}"></script>
 {% endblock %} 

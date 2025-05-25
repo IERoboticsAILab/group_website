@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/research_project_shared.css' %}">
+<link rel="stylesheet" href="{% static 'css/gallery-slideshow.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -139,7 +140,9 @@
             <div class="row">
                 {% for img in research_line.gallery_images.all %}
                 <div class="col-md-4">
-                    <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                    <div class="position-relative">
+                        <img src="{{ img.image.url }}" alt="{{ img.caption }}" class="img-fluid gallery-img">
+                    </div>
                     {% if img.caption %}
                     <p class="small text-muted">{{ img.caption }}</p>
                     {% endif %}
@@ -172,4 +175,8 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/gallery-slideshow.js' %}"></script>
 {% endblock %} 
