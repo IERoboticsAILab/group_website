@@ -172,22 +172,22 @@
                 <div class="row g-4">
                     {% for line in project.research_lines_set.all %}
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="project-card border rounded-4 h-100">
+                        <div class="project-card bg-dark text-white border border-secondary rounded-4 h-100">
                             <div class="project-image">
                                 {% if line.banner_image %}
                                 <img src="{{ line.banner_image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                                 {% elif line.image %}
                                 <img src="{{ line.image.url }}" alt="{{ line.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                                 {% else %}
-                                <div class="bg-light text-center rounded-top-4" style="height: 200px;">
-                                    <i class="bi bi-lightbulb pt-5" style="font-size: 3rem;"></i>
+                                <div class="bg-secondary text-center rounded-top-4" style="height: 200px;">
+                                    <i class="bi bi-lightbulb pt-5 text-light" style="font-size: 3rem;"></i>
                                 </div>
                                 {% endif %}
                             </div>
-                            <div class="p-3 d-flex flex-column">
-                                <h5 class="fw-bold mb-2">{{ line.title }}</h5>
-                                <p class="text-muted mb-2">{{ line.description|truncatewords:20 }}</p>
-                                <a href="{{ line.get_absolute_url }}" class="btn btn-outline-primary mt-auto">View Research Line</a>
+                            <div class="p-3 d-flex flex-column bg-dark">
+                                <h5 class="fw-bold mb-2 text-white">{{ line.title }}</h5>
+                                <p class="text-light mb-2">{{ line.description|truncatewords:20 }}</p>
+                                <a href="{{ line.get_absolute_url }}" class="btn btn-outline-light mt-auto">View Research Line</a>
                             </div>
                             <a href="{{ line.get_absolute_url }}" class="stretched-link"></a>
                         </div>

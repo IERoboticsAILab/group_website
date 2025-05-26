@@ -357,3 +357,81 @@ footer {
 .project-card:hover .project-image img {
   transform: scale(1.05);
 }
+
+/* Additional Dark Mode Styles for Publications and Cards */
+
+/* General card dark mode styles */
+[data-bs-theme="dark"] .card {
+    background-color: #495057;
+    border-color: #6c757d;
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Publication specific dark mode styles for general publication pages */
+[data-bs-theme="dark"] .publication {
+    color: #fff;
+    border-bottom-color: #495057 !important;
+}
+
+[data-bs-theme="dark"] .publication .authors {
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .publication .venue {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .publication h4 {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .publication-links a {
+    color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .publication-links a:hover {
+    color: #9ec5fe;
+}
+
+/* Project banner text dark mode improvements */
+[data-bs-theme="dark"] .project-date {
+    color: #fff;
+}
+
+/* Form controls dark mode */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #495057;
+    border-color: #6c757d;
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    background-color: #5a6268;
+    border-color: #6ea8fe;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(110, 168, 254, 0.25);
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: #adb5bd;
+}
+
+/* Text muted dark mode */
+[data-bs-theme="dark"] .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Border dark mode */
+[data-bs-theme="dark"] .border {
+    border-color: #495057 !important;
+}
+
+[data-bs-theme="dark"] .border-bottom {
+    border-bottom-color: #495057 !important;
+}

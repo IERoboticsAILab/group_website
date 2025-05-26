@@ -13,21 +13,21 @@
     {% for item_data in combined_items %}
         {% if item_data.type == 'research_line' %}
             <div class="col-md-3 mb-4">
-                <div class="project-card border rounded-4 h-100">
+                <div class="project-card bg-dark text-white border border-secondary rounded-4 h-100">
                     <div class="project-image">
                         {% if item_data.item.banner_image %}
                         <img src="{{ item_data.item.banner_image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                         {% elif item_data.item.image %}
                         <img src="{{ item_data.item.image.url }}" alt="{{ item_data.item.title }}" class="rounded-top-4 w-100" style="height: 200px; object-fit: cover;">
                         {% else %}
-                        <div class="bg-light text-center rounded-top-4" style="height: 200px;">
-                            <i class="bi bi-diagram-3 pt-5" style="font-size: 3rem;"></i>
+                        <div class="bg-secondary text-center rounded-top-4" style="height: 200px;">
+                            <i class="bi bi-diagram-3 pt-5 text-light" style="font-size: 3rem;"></i>
                         </div>
                         {% endif %}
                     </div>
-                    <div class="p-3 d-flex flex-column">
-                        <h5 class="fw-bold mb-2">{{ item_data.item.title }}</h5>
-                        <p class="text-muted mb-0">Research Line</p>
+                    <div class="p-3 d-flex flex-column bg-dark">
+                        <h5 class="fw-bold mb-2 text-white">{{ item_data.item.title }}</h5>
+                        <p class="text-light mb-0">Research Line</p>
                     </div>
                     <a href="{{ item_data.item.get_absolute_url }}" class="stretched-link"></a>
                 </div>

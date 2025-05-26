@@ -16,17 +16,47 @@
     height: 100%;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-start;
-    padding: 0 15px;
+    justify-content: center;
+    padding: 0;
 }
 
 .banner-content {
     color: white;
     text-align: left;
-    padding: 40px;
+    padding: 40px 15px;
     margin-bottom: 100px;
-    max-width: 1200px;
     width: 100%;
+}
+
+/* Responsive max-widths to match Bootstrap container breakpoints */
+@media (min-width: 576px) {
+    .banner-content {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .banner-content {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .banner-content {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .banner-content {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .banner-content {
+        max-width: 1320px;
+    }
 }
 
 .gallery-img {
@@ -287,4 +317,170 @@
 
 .rich-content em {
     font-style: italic;
-} 
+}
+
+/* ========================================
+   DARK MODE STYLES
+   ======================================== */
+
+/* Content Cards Dark Mode */
+[data-bs-theme="dark"] .content-card {
+    background-color: #343a40;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Abstract and Overview Sections Dark Mode */
+[data-bs-theme="dark"] .abstract-section,
+[data-bs-theme="dark"] .overview-section {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .abstract-section h2,
+[data-bs-theme="dark"] .overview-section h2 {
+    color: #fff;
+}
+
+/* Section Titles Dark Mode */
+[data-bs-theme="dark"] .section-title {
+    color: #fff;
+    border-bottom-color: #495057;
+}
+
+/* Publication Cards Dark Mode */
+[data-bs-theme="dark"] .publication-card {
+    background-color: #495057;
+    color: #fff;
+    border-color: #6c757d;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+[data-bs-theme="dark"] .publication-card:hover {
+    background-color: #5a6268;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .publication-title {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .publication-authors {
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .publication-date {
+    color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .publication-link {
+    color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .publication-link:hover {
+    color: #9ec5fe;
+}
+
+/* Single Research Line Card Dark Mode */
+[data-bs-theme="dark"] .single-research-line-card {
+    background-color: #495057;
+    color: #fff;
+    border-color: #6c757d;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+[data-bs-theme="dark"] .single-research-line-card:hover {
+    background-color: #5a6268;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+/* Rich Content Dark Mode */
+[data-bs-theme="dark"] .rich-content {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .rich-content h1,
+[data-bs-theme="dark"] .rich-content h2,
+[data-bs-theme="dark"] .rich-content h3,
+[data-bs-theme="dark"] .rich-content h4,
+[data-bs-theme="dark"] .rich-content h5,
+[data-bs-theme="dark"] .rich-content h6 {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .rich-content blockquote {
+    color: #adb5bd;
+    background-color: #495057;
+    border-left-color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .rich-content figcaption {
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .rich-content pre {
+    background-color: #2d3436;
+    border-color: #495057;
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .rich-content code {
+    background-color: #495057;
+    color: #ff7b7b;
+}
+
+[data-bs-theme="dark"] .rich-content a {
+    color: #6ea8fe;
+}
+
+[data-bs-theme="dark"] .rich-content a:hover {
+    color: #9ec5fe;
+}
+
+/* Project Content Dark Mode */
+[data-bs-theme="dark"] .project-content {
+    color: #fff;
+}
+
+/* Project Cards Dark Mode */
+[data-bs-theme="dark"] .project-card {
+    background-color: #495057;
+    border-color: #6c757d;
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .project-card:hover {
+    background-color: #5a6268;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .project-card h5 {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .project-card .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Team Member Cards Dark Mode */
+[data-bs-theme="dark"] .team-member-card {
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .team-member-card .text-muted {
+    color: #adb5bd !important;
+}
+
+/* Gallery Section Dark Mode */
+[data-bs-theme="dark"] .gallery-img {
+    border: 1px solid #495057;
+}
+
+/* Alert Dark Mode for empty states */
+[data-bs-theme="dark"] .alert-info {
+    background-color: #1f4e5f;
+    border-color: #3d8b96;
+    color: #b8daff;
+}
+
+ 
