@@ -358,6 +358,23 @@ footer {
   transform: scale(1.05);
 }
 
+/* Research Line Card Dark Mode Override */
+[data-bs-theme="dark"] .project-card.bg-dark {
+  background-color: #fff !important;
+}
+
+[data-bs-theme="dark"] .project-card.bg-dark .text-white {
+  color: #212529 !important;
+}
+
+[data-bs-theme="dark"] .project-card.bg-dark .text-light {
+  color: #495057 !important;
+}
+
+[data-bs-theme="dark"] .project-card.bg-dark .bg-dark {
+  background-color: #fff !important;
+}
+
 /* Additional Dark Mode Styles for Publications and Cards */
 
 /* General card dark mode styles */
