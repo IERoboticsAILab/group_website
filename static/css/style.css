@@ -215,7 +215,6 @@ footer {
 
 .secondary-section {
     background-color: #231F20;
-    padding: 4rem;
 }
 
 .project-banner {
@@ -504,10 +503,6 @@ footer {
         padding: 0 6rem;
     }
     
-    .secondary-section {
-        padding: 6rem;
-    }
-    
     /* Scale up text slightly for better readability on large screens */
     body {
         font-size: 1.1rem;
@@ -541,9 +536,6 @@ footer {
         padding: 0 8rem;
     }
     
-    .secondary-section {
-        padding: 8rem;
-    }
     
     /* Further scale up for TV screens */
     body {
