@@ -449,3 +449,190 @@ footer {
 [data-bs-theme="dark"] .border-bottom {
     border-bottom-color: #495057 !important;
 }
+
+/* Large Screen / TV Responsive Container Overrides */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 95% !important;
+    }
+    
+    /* Optimize project slider for large screens */
+    .projects-slider .project-item {
+        flex: 0 0 calc(33.333% - 15px);
+        min-width: 400px;
+        height: 300px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .container {
+        max-width: 92% !important;
+    }
+    
+    .projects-slider .project-item {
+        flex: 0 0 calc(25% - 15px);
+        min-width: 450px;
+        height: 320px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        max-width: 90% !important;
+    }
+    
+    .projects-slider .project-item {
+        min-width: 500px;
+        height: 350px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .container {
+        max-width: 88% !important;
+    }
+    
+    .projects-slider .project-item {
+        min-width: 600px;
+        height: 400px;
+    }
+}
+
+/* Ensure consistent spacing on large screens */
+@media (min-width: 1600px) {
+    .about-section {
+        padding: 0 6rem;
+    }
+    
+    .secondary-section {
+        padding: 6rem;
+    }
+    
+    /* Scale up text slightly for better readability on large screens */
+    body {
+        font-size: 1.1rem;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+    }
+    
+    h3 {
+        font-size: 2rem;
+    }
+    
+    /* Optimize people page for large screens */
+    .social-links i {
+        font-size: 1.8rem !important;
+    }
+    
+    /* Remove fixed width constraints on large screens */
+    .container[style*="max-width"] {
+        max-width: none !important;
+    }
+}
+
+@media (min-width: 1920px) {
+    .about-section {
+        padding: 0 8rem;
+    }
+    
+    .secondary-section {
+        padding: 8rem;
+    }
+    
+    /* Further scale up for TV screens */
+    body {
+        font-size: 1.2rem;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 3rem;
+    }
+    
+    h3 {
+        font-size: 2.5rem;
+    }
+    
+    /* Make cards and images larger on TV screens */
+    .team-member img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .project-card {
+        margin-bottom: 3rem;
+    }
+    
+    /* Scale up people page elements for TV */
+    .team-member div img[style*="width: 180px"] {
+        width: 240px !important;
+        height: 240px !important;
+    }
+    
+    .team-member div img[style*="width: 250px"] {
+        width: 320px !important;
+        height: 320px !important;
+    }
+    
+    .social-links i {
+        font-size: 2.2rem !important;
+    }
+    
+    .card {
+        margin-bottom: 4rem;
+    }
+}
+
+@media (min-width: 2560px) {
+    body {
+        font-size: 1.3rem;
+    }
+    
+    h1 {
+        font-size: 4rem;
+    }
+    
+    h2 {
+        font-size: 3.5rem;
+    }
+    
+    h3 {
+        font-size: 3rem;
+    }
+    
+    .navbar-brand {
+        font-size: 2rem;
+    }
+    
+    .nav-link {
+        font-size: 1.2rem;
+    }
+    
+    /* Ultra-large screen optimizations */
+    .team-member div img[style*="width: 180px"] {
+        width: 280px !important;
+        height: 280px !important;
+    }
+    
+    .team-member div img[style*="width: 250px"] {
+        width: 380px !important;
+        height: 380px !important;
+    }
+    
+    .social-links i {
+        font-size: 2.5rem !important;
+    }
+    
+    .card-body {
+        padding: 3rem !important;
+    }
+}
