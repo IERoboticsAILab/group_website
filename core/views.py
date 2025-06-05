@@ -15,15 +15,39 @@ def home(request):
     except HomeContent.DoesNotExist:
         home_content = None
     
-    # Get featured projects for the carousel
-    featured_projects = list(ResearchProject.objects.all().prefetch_related('research_lines_set')[:6])
+    # Get both projects and research lines for the carousel
+    projects = ResearchProject.objects.filter(active=True)[:3]
+    research_lines = ResearchLine.objects.filter(active=True)[:3]
     
-    # Group projects into rows of 3 for carousel
+    # Combine both querysets with type identifiers
+    combined_items = []
+    
+    # Add projects with type identifier
+    for project in projects:
+        combined_items.append({
+            'item': project,
+            'type': 'project',
+            'date': project.date
+        })
+    
+    # Add research lines with type identifier
+    for research_line in research_lines:
+        combined_items.append({
+            'item': research_line,
+            'type': 'research_line',
+            'date': research_line.date
+        })
+    
+    # Sort by date (newest first) and take first 6
+    combined_items.sort(key=lambda x: x['date'], reverse=True)
+    combined_items = combined_items[:6]
+    
+    # Group items into rows of 3 for carousel
     def grouper(iterable, n):
         args = [iter(iterable)] * n
         return zip_longest(*args)
     
-    projects_grouped = list(grouper(featured_projects, 3)) if featured_projects else []
+    projects_grouped = list(grouper(combined_items, 3)) if combined_items else []
     
     context = {
         'home_content': home_content,

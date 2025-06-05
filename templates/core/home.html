@@ -47,24 +47,32 @@
       
       <div class="projects-slider">
         {% for project_group in projects %}
-          {% for project in project_group %}
-            {% if project %}
+          {% for item_data in project_group %}
+            {% if item_data %}
             <div class="project-item">
-              <a href="{% url 'project_detail' project.slug %}">
-                {% if project.banner_image %}
-                  <img src="{{ project.banner_image.url }}" class="project-image" alt="{{ project.title }}">
-                {% elif project.image %}
-                  <img src="{{ project.image.url }}" class="project-image" alt="{{ project.title }}">
+              {% if item_data.type == 'research_line' %}
+                <a href="{% url 'research_line_detail' item_data.item.slug %}">
+              {% else %}
+                <a href="{% url 'project_detail' item_data.item.slug %}">
+              {% endif %}
+                {% if item_data.item.banner_image %}
+                  <img src="{{ item_data.item.banner_image.url }}" class="project-image" alt="{{ item_data.item.title }}">
+                {% elif item_data.item.image %}
+                  <img src="{{ item_data.item.image.url }}" class="project-image" alt="{{ item_data.item.title }}">
                 {% else %}
                   <div class="bg-dark h-100 d-flex align-items-center justify-content-center">
-                    <i class="bi bi-diagram-project text-light" style="font-size: 3rem;"></i>
+                    {% if item_data.type == 'research_line' %}
+                      <i class="bi bi-diagram-3 text-light" style="font-size: 3rem;"></i>
+                    {% else %}
+                      <i class="bi bi-diagram-project text-light" style="font-size: 3rem;"></i>
+                    {% endif %}
                   </div>
                 {% endif %}
                 
                 <div class="project-overlay">
-                  <h3>{{ project.title }}</h3>
+                  <h3>{{ item_data.item.title }}</h3>
                   <p>
-                    {% if project.research_lines_set.first %}
+                    {% if item_data.type == 'research_line' %}
                       Research Line
                     {% else %}
                       Research Project
