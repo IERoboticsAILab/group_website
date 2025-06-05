@@ -14,30 +14,36 @@
     {% if project.banner_image %}
     <div class="project-banner" style="background-image: url('{{ project.banner_image.url }}');">
         <div class="banner-overlay">
-            <div class="banner-content">
-                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
-                <h1 class="display-4">{{ project.title }}</h1>
-                <p class="lead">Research Project</p>
+            <div class="container">
+                <div class="banner-content">
+                    <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                    <h1 class="display-4">{{ project.title }}</h1>
+                    <p class="lead">Research Project</p>
+                </div>
             </div>
         </div>
     </div>
     {% elif project.image %}
     <div class="project-banner" style="background-image: url('{{ project.image.url }}');">
         <div class="banner-overlay">
-            <div class="banner-content">
-                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
-                <h1 class="display-4">{{ project.title }}</h1>
-                <p class="lead">Research Project</p>
+            <div class="container">
+                <div class="banner-content">
+                    <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                    <h1 class="display-4">{{ project.title }}</h1>
+                    <p class="lead">Research Project</p>
+                </div>
             </div>
         </div>
     </div>
     {% else %}
     <div class="project-banner bg-dark">
         <div class="banner-overlay">
-            <div class="banner-content">
-                <div class="project-date">{{ project.date|date:"m-Y" }}</div>
-                <h1 class="display-4">{{ project.title }}</h1>
-                <p class="lead">Research Project</p>
+            <div class="container">
+                <div class="banner-content">
+                    <div class="project-date">{{ project.date|date:"m-Y" }}</div>
+                    <h1 class="display-4">{{ project.title }}</h1>
+                    <p class="lead">Research Project</p>
+                </div>
             </div>
         </div>
     </div>
