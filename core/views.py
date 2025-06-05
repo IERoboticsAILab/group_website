@@ -148,8 +148,8 @@ def contact(request):
     except LabInfo.DoesNotExist:
         lab_info = None
     
-    # Get active job positions
-    job_positions = JobPosition.objects.all()
+    # Get active job positions ordered by most recently added (highest ID first)
+    job_positions = JobPosition.objects.all().order_by('-id')
     
     context = {
         'lab_info': lab_info,
