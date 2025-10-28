@@ -25,7 +25,7 @@
       <div class="col-md-5 d-flex flex-column justify-content-center">
         {% if home_content.youtube_video_url %}
           <div class="ratio ratio-16x9 mb-2">
-            <iframe width="560" height="315" class="rounded" src="{{ home_content.youtube_video_url }}" title="YouTube video player" frameborder="0" allowfullscreen ></iframe>
+            <iframe width="560" height="315" class="rounded" src="{{ home_content.youtube_video_url }}" title="YouTube video player" frameborder="0" allowfullscreen referrerPolicy="strict-origin-when-cross-origin"></iframe>
           </div>
           <div class="text-center text-muted" style="font-size: 0.95em;">Introduction to CyPhy Life</div>
         {% endif %}
