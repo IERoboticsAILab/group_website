@@ -109,16 +109,11 @@
                 <div>
                     {% if pub.pdflink %}
                     <a href="{{ pub.pdflink }}" target="_blank" class="publication-link">
-                        <i class="bi bi-file-pdf"></i> PDF
+                        <i class="bi bi-file-earmark-text"></i> Pre-Print
                     </a>
                     {% endif %}
                     {% if pub.paperlink %}
                     <a href="{{ pub.paperlink }}" target="_blank" class="publication-link">
-                        <i class="bi bi-journal-text"></i> Publication
-                    </a>
-                    {% endif %}
-                    {% if pub.link %}
-                    <a href="{{ pub.link }}" target="_blank" class="publication-link">
                         <i class="bi bi-link-45deg"></i> Publication
                     </a>
                     {% endif %}
