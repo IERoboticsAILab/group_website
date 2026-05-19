@@ -37,7 +37,7 @@
                 <div class="mb-2 text-muted">{{ pub.date|date:"m-Y" }}</div>
                 <h4 class="fw-bold">{{ pub.title }}</h4>
                 <p class="authors mb-3">{{ pub.authors }}</p>
-                
+
                 {% if pub.abstract %}
                 <div class="mb-3">
                     <div>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 {% endif %}
-                
+
                 <div class="publication-links">
                     {% if pub.pdflink %}
                     <a href="{{ pub.pdflink }}" class="me-3" target="_blank">
@@ -56,8 +56,18 @@
                     </a>
                     {% endif %}
                     {% if pub.paperlink %}
-                    <a href="{{ pub.paperlink }}" target="_blank">
+                    <a href="{{ pub.paperlink }}" class="me-3" target="_blank">
                         <i class="bi bi-link-45deg me-1"></i> Publication
+                    </a>
+                    {% endif %}
+                    {% if pub.websitelink %}
+                    <a href="{{ pub.websitelink }}" class="me-3" target="_blank">
+                        <i class="bi bi-globe me-1"></i> Website
+                    </a>
+                    {% endif %}
+                    {% if pub.codelink %}
+                    <a href="{{ pub.codelink }}" class="me-3" target="_blank">
+                        <i class="bi bi-github me-1"></i> Repository
                     </a>
                     {% endif %}
                 </div>
@@ -78,16 +88,16 @@
         const yearFilter = document.getElementById('publication-year-filter');
         const publications = document.querySelectorAll('.publication');
         const publicationCount = document.getElementById('publication-count');
-        
+
         function updatePublicationCount() {
             const visiblePublications = document.querySelectorAll('.publication:not([style*="display: none"])');
             publicationCount.textContent = visiblePublications.length;
         }
-        
+
         if (yearFilter) {
             yearFilter.addEventListener('change', function() {
                 const selectedYear = this.value;
-                
+
                 publications.forEach(pub => {
                     if (selectedYear === 'all' || pub.dataset.year === selectedYear) {
                         pub.style.display = '';
@@ -95,26 +105,26 @@
                         pub.style.display = 'none';
                     }
                 });
-                
+
                 updatePublicationCount();
             });
         }
-        
+
         // Search functionality
         const searchInput = document.getElementById('publication-search');
         if (searchInput) {
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase().trim();
-                
+
                 publications.forEach(pub => {
                     const title = pub.querySelector('h4').textContent.toLowerCase();
                     const authors = pub.querySelector('.authors').textContent.toLowerCase();
-                    const abstract = pub.querySelector('[id^="abstract-"]') ? 
+                    const abstract = pub.querySelector('[id^="abstract-"]') ?
                                      pub.querySelector('[id^="abstract-"]').textContent.toLowerCase() : '';
-                    
-                    if (searchTerm === '' || 
-                        title.includes(searchTerm) || 
-                        authors.includes(searchTerm) || 
+
+                    if (searchTerm === '' ||
+                        title.includes(searchTerm) ||
+                        authors.includes(searchTerm) ||
                         abstract.includes(searchTerm)) {
                         // Also check if it matches the year filter
                         const currentYearFilter = yearFilter.value;
@@ -125,10 +135,10 @@
                         pub.style.display = 'none';
                     }
                 });
-                
+
                 updatePublicationCount();
             });
         }
     });
 </script>
-{% endblock %} 
+{% endblock %}
