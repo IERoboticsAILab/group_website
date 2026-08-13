@@ -118,8 +118,8 @@
         <h2 class="mb-4">Alumni</h2>
         <div class="row">
             {% for member in alumni %}
-            <div class="col-md-3 mb-4 text-center">
-                <div class="team-member d-flex flex-column align-items-center h-100">
+            <div class="col-md-3 mb-5 text-center">
+                <div class="team-member d-flex flex-column align-items-center h-80">
                     <div class="mb-3">
                         {% if member.image %}
                         <img src="{{ member.image.url }}" alt="{{ member.first_name }} {{ member.last_name }}" class="rounded-circle img-fluid border" style="width: 180px; height: 180px; object-fit: cover;">
