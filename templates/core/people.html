@@ -129,22 +129,33 @@
                     </div>
                     <h4 class="fw-bold mb-1">{{ member.first_name }} {{ member.last_name }}</h4>
                     {% if member.position %}
-                    <p class="text-muted mb-3">{{ member.position }}</p>
+                    <p class="text-muted {% if member.alum_destination %}mb-1{% else %}mb-3{% endif %}">{{ member.position }}</p>
                     {% endif %}
-                    
+
+                    {% if member.alum_destination %}
+                    <p class="text-muted small mb-3">
+                        Now at
+                        {% if member.alum_destination_link %}
+                        <a href="{{ member.alum_destination_link }}" target="_blank">{{ member.alum_destination }}</a>
+                        {% else %}
+                        {{ member.alum_destination }}
+                        {% endif %}
+                    </p>
+                    {% endif %}
+
                     <div class="social-links d-flex justify-content-center gap-2 mt-auto">
                         {% if member.github %}
                         <a href="{{ member.github }}" target="_blank">
                             <i class="bi bi-github fs-4"></i>
                         </a>
                         {% endif %}
-                        
+
                         {% if member.linkedin %}
                         <a href="{{ member.linkedin }}" target="_blank">
                             <i class="bi bi-linkedin fs-4"></i>
                         </a>
                         {% endif %}
-                        
+
                         {% if member.email %}
                         <a href="mailto:{{ member.email }}">
                             <i class="bi bi-envelope fs-4"></i>
@@ -164,4 +175,4 @@
 </div>
 {% endif %}
 </div>
-{% endblock %} 
+{% endblock %}

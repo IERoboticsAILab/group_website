@@ -177,6 +177,16 @@ class TeamMember(models.Model):
     )
     principal_investigator = models.BooleanField(default=False)
     alum = models.BooleanField(default=False)
+    alum_destination = models.CharField(
+        max_length=200,
+        blank=True,
+        help_text="Where this person went after the lab, e.g. 'Google DeepMind' or "
+        "'PhD student at MIT'. Only shown for alumni.",
+    )
+    alum_destination_link = models.URLField(
+        blank=True,
+        help_text="Optional link for the destination above (lab, company, or personal page).",
+    )
 
     class Meta:
         ordering = ["last_name"]
